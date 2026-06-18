@@ -1,0 +1,1 @@
+Ingen backend krävs. All data är hårdkodad i `src/api.js` som exponerar `mock*`-funktioner istället för `apiFetch`. Samma visuella utseende, hash-routing och riktexteditor som IAEMFullType. Konverterad till plain JavaScript — inga `.ts`-filer, inga typannotationer.
