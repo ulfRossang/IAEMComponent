@@ -1,0 +1,15 @@
+import './styles.css';
+import './components/app-shell.js';
+import './components/hb-panel.js';
+import './components/hb-info-panel.js';
+import './pages/kundvy/meddelanden.js';
+import './pages/kundvy/utskick.js';
+import './pages/kundvy/sok-dokument.js';
+import './pages/kundvy/sok-kuvert.js';
+import './pages/kundvy/administrera-utskick.js';
+import './pages/publicering/installningar.js';
+import './pages/publicering/kontrollera.js';
+import './pages/publicering/godkann.js';
+import './pages/administration/infoprodukter.js';
+import './pages/administration/debitering.js';
+import './pages/administration/massutskick.js';

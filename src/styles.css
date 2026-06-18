@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+body {
+  background: #eef2f7;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #1a1a2e;
+}
+
+h1 {
+  color: #1565c0;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.hb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.hb-table thead tr {
+  border-bottom: 2px solid #d1d5db;
+}
+
+.hb-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.hb-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.1s;
+}
+
+.hb-table tbody tr:hover {
+  background: #f3f4f6;
+}
+
+.hb-table tbody tr.selected td {
+  background: #eff6ff;
+}
+
+.hb-table tbody td {
+  padding: 10px 12px;
+  color: #374151;
+}
+
+button.link {
+  color: #0066b3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+button.link:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Rich text editor – heading styles inside contenteditable */
+#f-meddelande h1 { font-size: 1.75rem; font-weight: 700; margin: 0.5rem 0; }
+#f-meddelande h2 { font-size: 1.35rem; font-weight: 700; margin: 0.4rem 0; }
+#f-meddelande h3 { font-size: 1.1rem;  font-weight: 700; margin: 0.3rem 0; }
+#f-meddelande p  { margin: 0.25rem 0; }
