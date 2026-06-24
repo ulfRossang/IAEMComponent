@@ -2142,6 +2142,11 @@ class PageMassutskick extends HTMLElement {
       this.querySelectorAll('#utskick-tbody tr').forEach(r => r.classList.remove('selected'));
     });
 
+    // Prevent contenteditable blur-normalization when clicking action buttons
+    ['#btn-spara', '#btn-ta-bort', '#btn-klarmarkera'].forEach(id => {
+      this.querySelector(id).addEventListener('mousedown', e => e.preventDefault());
+    });
+
     // Spara
     this.querySelector('#btn-spara').addEventListener('click', () => {
       const body = this.getFormBody();
@@ -2202,7 +2207,7 @@ class PageMassutskick extends HTMLElement {
       amne:                  this.querySelector('#f-amne').value.trim(),
       utskicksdatum:         this.querySelector('#f-datum').value,
       notifieringskategori:  this.querySelector('#f-notif').value,
-      meddelande:            editor.innerText.trim(),
+      meddelande:            editor.innerHTML,
     };
   }
 
@@ -2232,7 +2237,7 @@ class PageMassutskick extends HTMLElement {
     this.querySelector('#f-datum').value     = '';
     this.querySelector('#f-notif').value     = '';
     const editor = this.querySelector('#f-meddelande');
-    editor.innerText = '';
+    editor.innerHTML = '';
     editor.classList.add('empty');
     this.querySelector('#bilagor-list').innerHTML = '';
   }
@@ -2245,7 +2250,7 @@ class PageMassutskick extends HTMLElement {
     this.querySelector('#f-datum').value     = u.utskicksdatum || '';
     this.querySelector('#f-notif').value     = u.notifieringskategori || '';
     const editor = this.querySelector('#f-meddelande');
-    editor.innerText = u.meddelande || '';
+    editor.innerHTML = u.meddelande || '';
     if (editor.textContent?.trim()) editor.classList.remove('empty');
     else editor.classList.add('empty');
   }
