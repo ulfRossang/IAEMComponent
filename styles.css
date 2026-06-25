@@ -67,7 +67,16 @@ button.link:hover {
 }
 
 /* Rich text editor – heading styles inside contenteditable */
-#f-meddelande h1 { font-size: 1.75rem; font-weight: 700; margin: 0.5rem 0; }
-#f-meddelande h2 { font-size: 1.35rem; font-weight: 700; margin: 0.4rem 0; }
-#f-meddelande h3 { font-size: 1.1rem;  font-weight: 700; margin: 0.3rem 0; }
-#f-meddelande p  { margin: 0.25rem 0; }
+#f-meddelande h1, #ip-f-meddelande h1 { font-size: 1.75rem; font-weight: 700; margin: 0.5rem 0; }
+#f-meddelande h2, #ip-f-meddelande h2 { font-size: 1.35rem; font-weight: 700; margin: 0.4rem 0; }
+#f-meddelande h3, #ip-f-meddelande h3 { font-size: 1.1rem;  font-weight: 700; margin: 0.3rem 0; }
+#f-meddelande p,  #ip-f-meddelande p  { margin: 0.25rem 0; }
+
+/* Placeholder for contenteditable */
+#f-meddelande.empty::before, #ip-f-meddelande.empty::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+  position: absolute;
+}
+#f-meddelande, #ip-f-meddelande { position: relative; }

@@ -8,6 +8,7 @@ const LABEL  = 'block text-sm text-gray-700 mb-1';
 const REQ    = '<span class="text-red-600">*</span>';
 
 const NOTIF_KAT = ['AVRNOTA','KONTODR','BOKFAVI','RANTEBS','KORTBEK','FONDBES','AVTAL'];
+const BTN_SMALL = 'bg-[#1565c0] text-white rounded-full px-3 py-1 text-xs cursor-pointer hover:bg-[#0d52a8] border-0';
 
 class PageInfoprodukter extends HTMLElement {
   connectedCallback() {
@@ -177,15 +178,51 @@ class PageInfoprodukter extends HTMLElement {
                 <!-- Row 8: Meddelande i utskick via Internet -->
                 <div>
                   <label class="${LABEL}">Meddelande i utskick via Internet ${REQ}</label>
-                  <textarea id="f-meddelande" class="${INPUT}" rows="5" style="resize:vertical"
-                    placeholder="Här lägger vi in text för inkorg"></textarea>
-                </div>
-
-                <!-- Row 9: Informationstext -->
-                <div>
-                  <label class="${LABEL}">Informationstext</label>
-                  <textarea id="f-infotext" class="${INPUT}" rows="3" style="resize:vertical"
-                    placeholder="Infotext..."></textarea>
+                  <div class="border border-gray-300 rounded-md overflow-hidden">
+                    <!-- Toolbar -->
+                    <div class="flex flex-wrap items-center gap-1 px-2 py-1.5 border-b border-gray-200 bg-gray-50">
+                      <select id="ip-tb-font" class="text-xs border border-gray-300 rounded px-1 py-0.5 bg-white focus:outline-none cursor-pointer">
+                        <option value="inherit">Standard</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="Georgia, serif">Georgia</option>
+                        <option value="'Times New Roman', serif">Times New Roman</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="Verdana, sans-serif">Verdana</option>
+                      </select>
+                      <select id="ip-tb-size" class="text-xs border border-gray-300 rounded px-1 py-0.5 bg-white focus:outline-none cursor-pointer w-16">
+                        <option value="">Storlek</option>
+                        <option value="10px">10</option>
+                        <option value="12px">12</option>
+                        <option value="14px" selected>14</option>
+                        <option value="16px">16</option>
+                        <option value="18px">18</option>
+                        <option value="20px">20</option>
+                        <option value="24px">24</option>
+                        <option value="32px">32</option>
+                      </select>
+                      <span class="text-gray-300 mx-0.5">|</span>
+                      <button type="button" data-ip-block="h1" class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">H1</button>
+                      <button type="button" data-ip-block="h2" class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">H2</button>
+                      <button type="button" data-ip-block="h3" class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">H3</button>
+                      <button type="button" data-ip-block="p"  class="${BTN_SMALL} !rounded !px-2 !py-0.5">¶</button>
+                      <span class="text-gray-300 mx-0.5">|</span>
+                      <button type="button" data-ip-cmd="bold"      class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">B</button>
+                      <button type="button" data-ip-cmd="italic"    class="${BTN_SMALL} !rounded !px-2 !py-0.5 italic">I</button>
+                      <button type="button" data-ip-cmd="underline" class="${BTN_SMALL} !rounded !px-2 !py-0.5 underline">U</button>
+                      <span class="text-gray-300 mx-0.5">|</span>
+                      <button type="button" data-ip-cmd="justifyLeft"   class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Vänster">⬅</button>
+                      <button type="button" data-ip-cmd="justifyCenter" class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Centrera">↔</button>
+                      <button type="button" data-ip-cmd="justifyRight"  class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Höger">➡</button>
+                      <span class="text-gray-300 mx-0.5">|</span>
+                      <button type="button" data-ip-cmd="insertUnorderedList" class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Punktlista">≡</button>
+                      <button type="button" data-ip-cmd="insertOrderedList"   class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Numrerad lista">1.</button>
+                    </div>
+                    <!-- Editable area -->
+                    <div id="ip-f-meddelande"
+                         contenteditable="true"
+                         class="min-h-[120px] px-3 py-2 text-sm text-gray-700 focus:outline-none"
+                         data-placeholder="Här lägger vi in text för inkorg"></div>
+                  </div>
                 </div>
 
                 <div id="save-msg" class="hidden text-green-700 text-sm font-medium">&#10003; Sparad</div>
@@ -236,10 +273,55 @@ class PageInfoprodukter extends HTMLElement {
   }
 
   init() {
+    const editor = () => this.querySelector('#ip-f-meddelande');
+
+    this.querySelectorAll('button[data-ip-cmd]').forEach(btn => {
+      btn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        document.execCommand(btn.dataset['ipCmd'], false);
+        editor().focus();
+      });
+    });
+
+    this.querySelectorAll('button[data-ip-block]').forEach(btn => {
+      btn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        document.execCommand('formatBlock', false, btn.dataset['ipBlock']);
+        editor().focus();
+      });
+    });
+
+    this.querySelector('#ip-tb-font').addEventListener('change', (e) => {
+      document.execCommand('fontName', false, e.target.value);
+      editor().focus();
+    });
+
+    this.querySelector('#ip-tb-size').addEventListener('change', (e) => {
+      const size = e.target.value;
+      if (!size) return;
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        const range = sel.getRangeAt(0);
+        const span = document.createElement('span');
+        span.style.fontSize = size;
+        range.surroundContents(span);
+        sel.removeAllRanges();
+      }
+      editor().focus();
+    });
+
+    const updatePlaceholder = () => {
+      const el = editor();
+      el.classList.toggle('empty', !el.textContent?.trim());
+    };
+    editor().addEventListener('input', updatePlaceholder);
+    updatePlaceholder();
+
     this.querySelector('#filter-land').addEventListener('change', (e) => {
       this.loadProducts(e.target.value);
     });
 
+    this.querySelector('#btn-spara').addEventListener('mousedown', e => e.preventDefault());
     this.querySelector('#btn-spara').addEventListener('click', () => {
       const body = {
         land:                    this.querySelector('#f-land').value,
@@ -261,8 +343,7 @@ class PageInfoprodukter extends HTMLElement {
         obligKanalInternet:      this.querySelector('#f-oblig-internet').checked,
         kanalKrav:               (this.querySelector('input[name="ip-kanal-krav"]:checked') ?? {}).value ?? 'Ja',
         debiteraIckeInternet:    (this.querySelector('input[name="ip-debitera"]:checked') ?? {}).value ?? 'Nej',
-        meddelande:              this.querySelector('#f-meddelande').value.trim(),
-        informationstext:        this.querySelector('#f-infotext').value.trim(),
+        meddelande:              editor().innerHTML,
       };
       mockCreateInformationsprodukt(body);
       this.loadProducts(this.querySelector('#filter-land').value);
