@@ -61,11 +61,11 @@ let INFORMATIONSPRODUKTER = [
 ];
 
 let DEBITERINGSUPPGIFTER = [
-  { produktid: 'DEB-001', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217805', antsKodEjInternet: '217905', resultatstalle: '68821' },
-  { produktid: 'DEB-002', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217826', antsKodEjInternet: '217926', resultatstalle: '68821' },
-  { produktid: 'DEB-003', meddelandeid: '-', systembeteckning: 'REVL', antsKodInternet: '217807', antsKodEjInternet: '217907', resultatstalle: '69314' },
-  { produktid: 'DEB-004', meddelandeid: '-', systembeteckning: 'HBOS', antsKodInternet: '217804', antsKodEjInternet: '217904', resultatstalle: '60180' },
-  { produktid: 'DEB-005', meddelandeid: '-', systembeteckning: 'AKKO', antsKodInternet: '217800', antsKodEjInternet: '217900', resultatstalle: '60280' },
+  { produktid: 'DEB-001', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217805', antsKodEjInternet: '217905', resultatstalle: '68821', status: 'Aktiv' },
+  { produktid: 'DEB-002', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217826', antsKodEjInternet: '217926', resultatstalle: '68821', status: 'Aktiv' },
+  { produktid: 'DEB-003', meddelandeid: '-', systembeteckning: 'REVL', antsKodInternet: '217807', antsKodEjInternet: '217907', resultatstalle: '69314', status: 'Aktiv' },
+  { produktid: 'DEB-004', meddelandeid: '-', systembeteckning: 'HBOS', antsKodInternet: '217804', antsKodEjInternet: '217904', resultatstalle: '60180', status: 'Under upplägg' },
+  { produktid: 'DEB-005', meddelandeid: '-', systembeteckning: 'AKKO', antsKodInternet: '217800', antsKodEjInternet: '217900', resultatstalle: '60280', status: 'Under upplägg' },
 ];
 
 let MASSUTSKICK = [
@@ -1879,11 +1879,20 @@ class PageDebitering extends HTMLElement {
                     <label class="block text-xs text-gray-500 mb-1">Resultatställe</label>
                     <input id="f-res" class="${INPUT}" />
                   </div>
+                  <div>
+                    <label class="block text-xs text-gray-500 mb-1">Status</label>
+                    <select id="f-status" class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#1565c0] w-full bg-white appearance-none">
+                      <option value="Aktiv">Aktiv</option>
+                      <option value="Under upplägg">Under upplägg</option>
+                      <option value="Inaktiv">Inaktiv</option>
+                    </select>
+                  </div>
                 </div>
                 <div id="save-msg" class="hidden mb-3 text-green-700 text-sm font-medium">&#10003; Sparad</div>
                 <div class="flex gap-3">
                   <button id="btn-spara" class="${BTN}">Spara ny</button>
                   <button id="btn-andra" class="${BTN}">Ändra</button>
+                  <button id="btn-klarmarkera" class="${BTN}">Klarmarkera</button>
                   <button id="btn-avbryt" class="${BTN_SEC}">Avbryt</button>
                 </div>
               </div>
@@ -1906,6 +1915,7 @@ class PageDebitering extends HTMLElement {
                       <th>ANTS-kod internet</th>
                       <th>ANTS-kod ej internet</th>
                       <th>Resultatställe</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody id="deb-tbody"></tbody>
@@ -1943,11 +1953,21 @@ class PageDebitering extends HTMLElement {
       this.showMsg('✓ Ändrad');
     });
 
+    this.querySelector('#btn-klarmarkera').addEventListener('click', () => {
+      if (!this.selectedRow) return;
+      this.querySelector('#f-status').value = 'Aktiv';
+      const body = this.getFormBody();
+      mockUpdateDebiteringsuppgift(this.selectedRow.produktid, body);
+      this.loadRows();
+      this.showMsg('✓ Klarmarkerad');
+    });
+
     this.querySelector('#btn-avbryt').addEventListener('click', () => {
       this.selectedRow = null;
       ['f-produktid', 'f-meddid', 'f-sys', 'f-ants-i', 'f-ants-ej', 'f-res'].forEach(id => {
         this.querySelector(`#${id}`).value = '';
       });
+      this.querySelector('#f-status').value = 'Aktiv';
     });
 
     this.querySelector('#btn-ta-bort').addEventListener('click', () => {
@@ -1970,6 +1990,7 @@ class PageDebitering extends HTMLElement {
       antsKodInternet:   this.querySelector('#f-ants-i').value.trim(),
       antsKodEjInternet: this.querySelector('#f-ants-ej').value.trim(),
       resultatstalle:    this.querySelector('#f-res').value.trim(),
+      status:            this.querySelector('#f-status').value,
     };
   }
 
@@ -1999,6 +2020,7 @@ class PageDebitering extends HTMLElement {
         <td>${r.antsKodInternet}</td>
         <td>${r.antsKodEjInternet}</td>
         <td>${r.resultatstalle}</td>
+        <td style="color:${r.status === 'Aktiv' ? '#15803d' : r.status === 'Inaktiv' ? '#6b7280' : '#d97706'}">${r.status ?? ''}</td>
       `;
       tr.querySelector('button.link').addEventListener('click', () => {
         this.selectedRow = r;
@@ -2008,6 +2030,7 @@ class PageDebitering extends HTMLElement {
         this.querySelector('#f-ants-i').value    = r.antsKodInternet;
         this.querySelector('#f-ants-ej').value   = r.antsKodEjInternet;
         this.querySelector('#f-res').value       = r.resultatstalle;
+        this.querySelector('#f-status').value    = r.status ?? 'Aktiv';
       });
       tbody.appendChild(tr);
     });

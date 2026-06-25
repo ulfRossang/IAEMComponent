@@ -61,11 +61,11 @@ let INFORMATIONSPRODUKTER = [
 ];
 
 let DEBITERINGSUPPGIFTER = [
-  { produktid: 'DEB-001', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217805', antsKodEjInternet: '217905', resultatstalle: '68821' },
-  { produktid: 'DEB-002', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217826', antsKodEjInternet: '217926', resultatstalle: '68821' },
-  { produktid: 'DEB-003', meddelandeid: '-', systembeteckning: 'REVL', antsKodInternet: '217807', antsKodEjInternet: '217907', resultatstalle: '69314' },
-  { produktid: 'DEB-004', meddelandeid: '-', systembeteckning: 'HBOS', antsKodInternet: '217804', antsKodEjInternet: '217904', resultatstalle: '60180' },
-  { produktid: 'DEB-005', meddelandeid: '-', systembeteckning: 'AKKO', antsKodInternet: '217800', antsKodEjInternet: '217900', resultatstalle: '60280' },
+  { produktid: 'DEB-001', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217805', antsKodEjInternet: '217905', resultatstalle: '68821', status: 'Aktiv' },
+  { produktid: 'DEB-002', meddelandeid: '-', systembeteckning: 'INLÅ', antsKodInternet: '217826', antsKodEjInternet: '217926', resultatstalle: '68821', status: 'Aktiv' },
+  { produktid: 'DEB-003', meddelandeid: '-', systembeteckning: 'REVL', antsKodInternet: '217807', antsKodEjInternet: '217907', resultatstalle: '69314', status: 'Aktiv' },
+  { produktid: 'DEB-004', meddelandeid: '-', systembeteckning: 'HBOS', antsKodInternet: '217804', antsKodEjInternet: '217904', resultatstalle: '60180', status: 'Under upplägg' },
+  { produktid: 'DEB-005', meddelandeid: '-', systembeteckning: 'AKKO', antsKodInternet: '217800', antsKodEjInternet: '217900', resultatstalle: '60280', status: 'Under upplägg' },
 ];
 
 let MASSUTSKICK = [
