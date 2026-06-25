@@ -1693,33 +1693,6 @@ class PageDebitering extends HTMLElement {
         <h1>Debiteringsuppgifter</h1>
         <div class="flex gap-4 items-start">
           <div class="flex-1 space-y-4">
-            <!-- Table -->
-            <div class="${PANEL}">
-              <div class="px-4 pt-4 pb-1">
-                <h2 class="text-[#1565c0] font-bold text-base">Debiteringsuppgifter</h2>
-                <div class="mt-3 border-t border-gray-100"></div>
-              </div>
-              <div class="px-4 pb-4 pt-3">
-                <table class="hb-table">
-                  <thead>
-                    <tr>
-                      <th class="w-10"></th>
-                      <th>Produkt-ID</th>
-                      <th>Medd-ID</th>
-                      <th>Systembeteckning</th>
-                      <th>ANTS-kod internet</th>
-                      <th>ANTS-kod ej internet</th>
-                      <th>Resultatställe</th>
-                    </tr>
-                  </thead>
-                  <tbody id="deb-tbody"></tbody>
-                </table>
-                <div class="flex gap-3 mt-4">
-                  <button id="btn-ta-bort" class="${BTN_SEC}">Ta bort markerade</button>
-                </div>
-              </div>
-            </div>
-
             <!-- Form -->
             <div class="${PANEL}">
               <div class="px-4 pt-4 pb-1">
@@ -1758,6 +1731,33 @@ class PageDebitering extends HTMLElement {
                   <button id="btn-spara" class="${BTN}">Spara ny</button>
                   <button id="btn-andra" class="${BTN}">Ändra</button>
                   <button id="btn-avbryt" class="${BTN_SEC}">Avbryt</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="${PANEL}">
+              <div class="px-4 pt-4 pb-1">
+                <h2 class="text-[#1565c0] font-bold text-base">Debiteringsuppgifter</h2>
+                <div class="mt-3 border-t border-gray-100"></div>
+              </div>
+              <div class="px-4 pb-4 pt-3">
+                <table class="hb-table">
+                  <thead>
+                    <tr>
+                      <th class="w-10"></th>
+                      <th>Produkt-ID</th>
+                      <th>Medd-ID</th>
+                      <th>Systembeteckning</th>
+                      <th>ANTS-kod internet</th>
+                      <th>ANTS-kod ej internet</th>
+                      <th>Resultatställe</th>
+                    </tr>
+                  </thead>
+                  <tbody id="deb-tbody"></tbody>
+                </table>
+                <div class="flex gap-3 mt-4">
+                  <button id="btn-ta-bort" class="${BTN_SEC}">Ta bort markerade</button>
                 </div>
               </div>
             </div>
