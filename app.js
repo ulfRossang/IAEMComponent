@@ -1523,19 +1523,25 @@
                   </div>
                 </div>
 
-                <!-- Row 3: Systembeteckning, Avgiftsid Papper, Avgiftsid Internet -->
-                <div class="grid grid-cols-3 gap-4">
+                <!-- Row 3: Systembeteckning | Avgiftsid Papper+Internet | Beskrivning -->
+                <div class="grid grid-cols-3 gap-4 items-start">
                   <div>
                     <label class="${LABEL}">Systembeteckning</label>
                     <input id="f-sys" class="${INPUT8}" />
                   </div>
-                  <div>
-                    <label class="${LABEL}">Avgiftsid f\xF6r Papper ${REQ}</label>
-                    <input id="f-avg-papper" class="${INPUT8}" />
+                  <div class="space-y-3">
+                    <div>
+                      <label class="${LABEL}">Avgiftsid f\xF6r Papper ${REQ}</label>
+                      <input id="f-avg-papper" class="${INPUT8}" />
+                    </div>
+                    <div>
+                      <label class="${LABEL}">Avgiftsid f\xF6r Internet ${REQ}</label>
+                      <input id="f-avg-internet" class="${INPUT8}" />
+                    </div>
                   </div>
                   <div>
-                    <label class="${LABEL}">Avgiftsid f\xF6r Internet ${REQ}</label>
-                    <input id="f-avg-internet" class="${INPUT8}" />
+                    <label class="${LABEL}">Beskrivning</label>
+                    <textarea id="f-beskrivning" class="${INPUT8}" rows="4" style="resize:vertical"></textarea>
                   </div>
                 </div>
 
@@ -1561,12 +1567,6 @@
                     <label class="${LABEL}">DocSubtype</label>
                     <input id="f-docsubtype" class="${INPUT8}" type="text" />
                   </div>
-                </div>
-
-                <!-- Row 6: Beskrivning -->
-                <div>
-                  <label class="${LABEL}">Beskrivning</label>
-                  <textarea id="f-beskrivning" class="${INPUT8}" rows="3" style="resize:vertical"></textarea>
                 </div>
 
                 <!-- Kanaler & format \u2014 samlad sektion -->

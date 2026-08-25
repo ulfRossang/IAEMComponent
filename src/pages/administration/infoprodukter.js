@@ -109,19 +109,25 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 3: Systembeteckning, Avgiftsid Papper, Avgiftsid Internet -->
-                <div class="grid grid-cols-3 gap-4">
+                <!-- Row 3: Systembeteckning | Avgiftsid Papper+Internet | Beskrivning -->
+                <div class="grid grid-cols-3 gap-4 items-start">
                   <div>
                     <label class="${LABEL}">Systembeteckning</label>
                     <input id="f-sys" class="${INPUT}" />
                   </div>
-                  <div>
-                    <label class="${LABEL}">Avgiftsid för Papper ${REQ}</label>
-                    <input id="f-avg-papper" class="${INPUT}" />
+                  <div class="space-y-3">
+                    <div>
+                      <label class="${LABEL}">Avgiftsid för Papper ${REQ}</label>
+                      <input id="f-avg-papper" class="${INPUT}" />
+                    </div>
+                    <div>
+                      <label class="${LABEL}">Avgiftsid för Internet ${REQ}</label>
+                      <input id="f-avg-internet" class="${INPUT}" />
+                    </div>
                   </div>
                   <div>
-                    <label class="${LABEL}">Avgiftsid för Internet ${REQ}</label>
-                    <input id="f-avg-internet" class="${INPUT}" />
+                    <label class="${LABEL}">Beskrivning</label>
+                    <textarea id="f-beskrivning" class="${INPUT}" rows="4" style="resize:vertical"></textarea>
                   </div>
                 </div>
 
@@ -147,12 +153,6 @@ class PageInfoprodukter extends HTMLElement {
                     <label class="${LABEL}">DocSubtype</label>
                     <input id="f-docsubtype" class="${INPUT}" type="text" />
                   </div>
-                </div>
-
-                <!-- Row 6: Beskrivning -->
-                <div>
-                  <label class="${LABEL}">Beskrivning</label>
-                  <textarea id="f-beskrivning" class="${INPUT}" rows="3" style="resize:vertical"></textarea>
                 </div>
 
                 <!-- Kanaler & format — samlad sektion -->
