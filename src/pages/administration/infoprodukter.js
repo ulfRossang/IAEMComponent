@@ -121,90 +121,98 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 6: Visas i elektroniska dokument, PDF-format -->
-                <div class="grid grid-cols-3 gap-4">
-                  <div>
-                    <label class="${LABEL}">Visas i elektroniska dokument?</label>
-                    <select id="f-visas-edok" class="${SELECT}">
-                      <option value="">Välj i listan</option>
-                      <option>Ja</option>
-                      <option>Nej</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="${LABEL}">PDF-format</label>
-                    <select id="f-pdf-format" class="${SELECT}">
-                      <option value="N">N</option>
-                      <option value="Y">Y</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Row 7: Beskrivning -->
+                <!-- Row 6: Beskrivning -->
                 <div>
                   <label class="${LABEL}">Beskrivning</label>
                   <textarea id="f-beskrivning" class="${INPUT}" rows="3" style="resize:vertical"></textarea>
                 </div>
 
-                <!-- Row 6: Kanaler -->
-                <div class="grid grid-cols-3 gap-4">
-                  <div>
-                    <label class="${LABEL}">Defaultkanaler</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="f-def-papper" /> Papper
-                      </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="f-def-internet" /> Internet
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <label class="${LABEL}">Tillåtna kanaler</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="f-till-papper" /> Papper
-                      </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="f-till-internet" /> Internet
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <label class="${LABEL}">Obligatoriska kanaler</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="f-oblig-papper" /> Papper
-                      </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="checkbox" id="f-oblig-internet" /> Internet
-                      </label>
-                    </div>
-                  </div>
-                </div>
+                <!-- Kanaler & format — samlad sektion -->
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-4">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide -mb-1">Kanaler och format</p>
 
-                <!-- Row 7: Kanalval, Debitera -->
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="${LABEL}">Någon av kanalerna måste vara vald ${REQ}</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="radio" name="ip-kanal-krav" value="Ja" checked /> Ja
-                      </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="radio" name="ip-kanal-krav" value="Nej" /> Nej
-                      </label>
+                  <!-- Kanal-kryssrutor -->
+                  <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white border border-gray-200 rounded-md px-3 py-2">
+                      <p class="${LABEL} font-medium">Defaultkanaler</p>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="checkbox" id="f-def-papper" /> Papper
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="checkbox" id="f-def-internet" /> Internet
+                        </label>
+                      </div>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-md px-3 py-2">
+                      <p class="${LABEL} font-medium">Tillåtna kanaler</p>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="checkbox" id="f-till-papper" /> Papper
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="checkbox" id="f-till-internet" /> Internet
+                        </label>
+                      </div>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-md px-3 py-2">
+                      <p class="${LABEL} font-medium">Obligatoriska kanaler</p>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="checkbox" id="f-oblig-papper" /> Papper
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="checkbox" id="f-oblig-internet" /> Internet
+                        </label>
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <label class="${LABEL}">Debitera icke Internetkunder för pappersutskick ${REQ}</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="radio" name="ip-debitera" value="Ja" /> Ja
-                      </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
-                        <input type="radio" name="ip-debitera" value="Nej" checked /> Nej
-                      </label>
+
+                  <!-- Kanalval, Debitera, Visas i edok, PDF-format -->
+                  <div class="grid grid-cols-4 gap-4">
+                    <div>
+                      <label class="${LABEL}">Någon kanal måste vara vald ${REQ}</label>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-kanal-krav" value="Ja" checked /> Ja
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-kanal-krav" value="Nej" /> Nej
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="${LABEL}">Debitera icke Internetkunder ${REQ}</label>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-debitera" value="Ja" /> Ja
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-debitera" value="Nej" checked /> Nej
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="${LABEL}">Visas i elektroniska dokument?</label>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-visas-edok" id="f-visas-edok-ja" value="Ja" /> Ja
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-visas-edok" id="f-visas-edok-nej" value="Nej" /> Nej
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="${LABEL}">PDF-format</label>
+                      <div class="flex gap-4 mt-1">
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-pdf-format" id="f-pdf-format-j" value="Y" /> Ja
+                        </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <input type="radio" name="ip-pdf-format" id="f-pdf-format-n" value="N" checked /> Nej
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -372,8 +380,8 @@ class PageInfoprodukter extends HTMLElement {
         lagringstid:             this.querySelector('#f-lagring').value,
         docType:                 this.querySelector('#f-doctype').value.trim(),
         docSubtype:              this.querySelector('#f-docsubtype').value.trim(),
-        visasIElektroniskaDok:   this.querySelector('#f-visas-edok').value,
-        pdfFormat:               this.querySelector('#f-pdf-format').value,
+        visasIElektroniskaDok:   (this.querySelector('input[name="ip-visas-edok"]:checked') ?? {}).value ?? '',
+        pdfFormat:               (this.querySelector('input[name="ip-pdf-format"]:checked') ?? {}).value ?? 'N',
         beskrivning:             this.querySelector('#f-beskrivning').value.trim(),
         defaultkanalPapper:      this.querySelector('#f-def-papper').checked,
         defaultkanalInternet:    this.querySelector('#f-def-internet').checked,
@@ -441,8 +449,8 @@ class PageInfoprodukter extends HTMLElement {
     q('#f-lagring').value     = p.lagringstid ?? '';
     q('#f-doctype').value     = p.docType ?? '';
     q('#f-docsubtype').value  = p.docSubtype ?? '';
-    q('#f-visas-edok').value  = p.visasIElektroniskaDok ?? '';
-    q('#f-pdf-format').value  = p.pdfFormat ?? 'N';
+    setRadio('ip-visas-edok',  p.visasIElektroniskaDok ?? '');
+    setRadio('ip-pdf-format',  p.pdfFormat ?? 'N');
     q('#f-beskrivning').value = p.beskrivning ?? '';
 
     setRadio('ip-status',     p.status ?? 'Aktiv');
@@ -483,8 +491,8 @@ class PageInfoprodukter extends HTMLElement {
     q('#f-lagring').value      = '';
     q('#f-doctype').value      = '';
     q('#f-docsubtype').value   = '';
-    q('#f-visas-edok').value   = '';
-    q('#f-pdf-format').value   = 'N';
+    this.querySelectorAll('input[name="ip-visas-edok"]').forEach(r => r.checked = false);
+    q('#f-pdf-format-n').checked = true;
     q('#f-beskrivning').value  = '';
 
     this.querySelector('input[name="ip-status"][value="Aktiv"]').checked    = true;
