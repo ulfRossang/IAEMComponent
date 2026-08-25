@@ -28,16 +28,48 @@ class PageInfoprodukter extends HTMLElement {
               </div>
               <div class="px-4 pb-4 pt-3 space-y-4">
 
-                <!-- Row 1: Land, Id, Notifieringskategori -->
-                <div class="grid grid-cols-3 gap-4">
-                  <div>
-                    <label class="${LABEL}">Land ${REQ}</label>
-                    <select id="f-land" class="${SELECT}">
-                      <option value="">Välj land</option>
-                      <option>SE</option><option>NO</option><option>DK</option>
-                      <option>FI</option><option>GB</option><option>NL</option>
-                    </select>
+                <!-- Land -->
+                <div class="flex items-center gap-3">
+                  <label class="text-sm text-gray-700 w-28 shrink-0">Land ${REQ}</label>
+                  <select id="f-land" class="${SELECT}" style="max-width:220px">
+                    <option value="">Välj land</option>
+                    <option>SE</option><option>NO</option><option>DK</option>
+                    <option>FI</option><option>GB</option><option>NL</option>
+                  </select>
+                </div>
+
+                <!-- Namn med språk + lägg till-lista -->
+                <div class="flex items-start gap-3">
+                  <label class="text-sm text-gray-700 w-28 shrink-0 pt-1.5">Namn ${REQ}</label>
+                  <div class="flex-1 space-y-2">
+                    <div class="flex gap-2">
+                      <input id="f-namn" class="${INPUT}" placeholder="Ange namn" maxlength="20" style="max-width:200px" />
+                      <select id="f-sprak" class="${SELECT}" style="max-width:100px">
+                        <option value="">Välj</option>
+                        <option value="sv">sv</option>
+                        <option value="no">no</option>
+                        <option value="dk">dk</option>
+                        <option value="fi">fi</option>
+                        <option value="en">en</option>
+                        <option value="nl">nl</option>
+                      </select>
+                    </div>
+                    <button type="button" id="btn-add-namn" class="${BTN_SMALL}">Lägg till</button>
+                    <table id="namn-table" class="hidden text-sm border-collapse mt-1" style="width:auto">
+                      <thead>
+                        <tr class="text-left text-gray-500 border-b border-gray-200">
+                          <th class="font-normal pb-1" style="width:160px">Namn</th>
+                          <th class="font-normal pb-1 px-3" style="width:36px">Språk</th>
+                          <th style="width:16px"></th>
+                        </tr>
+                      </thead>
+                      <tbody id="namn-tbody"></tbody>
+                    </table>
                   </div>
+                </div>
+
+                <!-- Id, Notifieringskategori -->
+                <div class="grid grid-cols-3 gap-4">
                   <div>
                     <label class="${LABEL}">Id ${REQ}</label>
                     <input id="f-id" class="${INPUT}" />
@@ -51,12 +83,8 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 2: Namn, Status, Insynsskyddat dokument -->
+                <!-- Status, Insynsskyddat dokument -->
                 <div class="grid grid-cols-3 gap-4">
-                  <div>
-                    <label class="${LABEL}">Namn ${REQ}</label>
-                    <input id="f-namn" class="${INPUT}" />
-                  </div>
                   <div>
                     <label class="${LABEL}">Status ${REQ}</label>
                     <div class="flex gap-4 mt-1">
@@ -273,8 +301,24 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <div id="save-msg" class="hidden text-green-700 text-sm font-medium">&#10003; Sparad</div>
-                <button id="btn-spara" class="${BTN}">Spara</button>
+                <div class="flex justify-end items-center gap-3">
+                  <div id="save-msg" class="hidden text-green-700 text-sm font-medium">&#10003; Sparad</div>
+                  <div id="prod-msg" class="hidden text-green-700 text-sm font-medium">&#10003; Skickad till produktion</div>
+                  <button id="btn-spara" class="${BTN}">Spara</button>
+                  <button id="btn-till-prod" class="bg-white text-[#1565c0] border border-[#1565c0] rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#eef2f7]">Till prod</button>
+                </div>
+
+                <!-- Till prod — bekräftelsedialog -->
+                <div id="prod-dialog" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+                  <div class="bg-white rounded-lg shadow-xl border border-gray-200 p-6 w-[400px] space-y-4">
+                    <h3 class="text-[#1565c0] font-bold text-base">Skicka till produktion</h3>
+                    <p class="text-sm text-gray-700">Är du säker på att du vill skicka informationsprodukten till produktion? Åtgärden kan inte ångras.</p>
+                    <div class="flex gap-3 justify-end pt-2">
+                      <button id="prod-cancel" class="bg-white text-gray-600 border border-gray-300 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50">Avbryt</button>
+                      <button id="prod-confirm" class="${BTN}">Bekräfta</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -369,7 +413,35 @@ class PageInfoprodukter extends HTMLElement {
       this.loadProducts(e.target.value);
     });
 
+    this.namnLista = [];
+    this.querySelector('#btn-add-namn').addEventListener('click', () => {
+      const namn  = this.querySelector('#f-namn').value.trim();
+      const sprak = this.querySelector('#f-sprak').value;
+      if (!namn) return;
+      this.namnLista.push({ namn, sprak });
+      this.querySelector('#f-namn').value  = '';
+      this.querySelector('#f-sprak').value = '';
+      this.renderNamnLista();
+    });
+
     this.querySelector('#btn-ny').addEventListener('click', () => this.resetForm());
+
+    const dialog  = this.querySelector('#prod-dialog');
+    this.querySelector('#btn-till-prod').addEventListener('click', () => {
+      dialog.classList.remove('hidden');
+    });
+    this.querySelector('#prod-cancel').addEventListener('click', () => {
+      dialog.classList.add('hidden');
+    });
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.classList.add('hidden');
+    });
+    this.querySelector('#prod-confirm').addEventListener('click', () => {
+      dialog.classList.add('hidden');
+      const msg = this.querySelector('#prod-msg');
+      msg.classList.remove('hidden');
+      setTimeout(() => msg.classList.add('hidden'), 3000);
+    });
 
     this.querySelector('#btn-spara').addEventListener('mousedown', e => e.preventDefault());
     this.querySelector('#btn-spara').addEventListener('click', () => {
@@ -431,6 +503,26 @@ class PageInfoprodukter extends HTMLElement {
       tr.querySelector('button').addEventListener('click', () => this.fillForm(p.id));
       tbody.appendChild(tr);
     });
+  }
+
+  renderNamnLista() {
+    const tbody = this.querySelector('#namn-tbody');
+    const table = this.querySelector('#namn-table');
+    tbody.innerHTML = '';
+    this.namnLista.forEach((entry, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="py-0.5 text-gray-800" style="width:160px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${entry.namn}">${entry.namn.slice(0,20)}</td>
+        <td class="py-0.5 px-3 text-gray-600" style="width:36px">${entry.sprak}</td>
+        <td class="py-0.5" style="width:16px"><button type="button" class="text-gray-400 hover:text-red-500 text-xs leading-none" data-idx="${i}">✕</button></td>
+      `;
+      tr.querySelector('button').addEventListener('click', () => {
+        this.namnLista.splice(i, 1);
+        this.renderNamnLista();
+      });
+      tbody.appendChild(tr);
+    });
+    table.classList.toggle('hidden', this.namnLista.length === 0);
   }
 
   fillForm(id) {
@@ -512,6 +604,9 @@ class PageInfoprodukter extends HTMLElement {
     const editor = q('#ip-f-meddelande');
     editor.innerHTML = '';
     editor.classList.add('empty');
+
+    this.namnLista = [];
+    this.renderNamnLista();
 
     q('#form-title').textContent = 'Lägg till informationsprodukt';
     q('#btn-ny').classList.add('hidden');
