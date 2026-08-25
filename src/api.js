@@ -143,6 +143,9 @@ export function mockGetInformationsprodukter(land) {
   if (!land) return [...INFORMATIONSPRODUKTER];
   return INFORMATIONSPRODUKTER.filter(p => p.land.toLowerCase() === land.toLowerCase());
 }
+export function mockGetInformationsprodukt(id) {
+  return INFORMATIONSPRODUKTER.find(p => p.id === id) ?? null;
+}
 export function mockCreateInformationsprodukt(input) {
   const id = String(Math.max(...INFORMATIONSPRODUKTER.map(p => Number(p.id))) + 1);
   const item = { id, ...input };

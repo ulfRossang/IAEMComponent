@@ -1,4 +1,4 @@
-import { mockGetInformationsprodukter, mockCreateInformationsprodukt } from '../../api.js';
+import { mockGetInformationsprodukter, mockGetInformationsprodukt, mockCreateInformationsprodukt, mockUpdateInformationsprodukt } from '../../api.js';
 
 const BTN    = 'bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0';
 const INPUT  = 'border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#1565c0] w-full bg-white';
@@ -20,7 +20,10 @@ class PageInfoprodukter extends HTMLElement {
             <!-- Add new -->
             <div class="${PANEL}">
               <div class="px-4 pt-4 pb-1">
-                <h2 class="text-[#1565c0] font-bold text-base">Lägg till informationsprodukt</h2>
+                <div class="flex items-center justify-between">
+                  <h2 id="form-title" class="text-[#1565c0] font-bold text-base">Lägg till informationsprodukt</h2>
+                  <button id="btn-ny" class="${BTN_SMALL} hidden">+ Ny produkt</button>
+                </div>
                 <div class="mt-3 border-t border-gray-100"></div>
               </div>
               <div class="px-4 pb-4 pt-3 space-y-4">
@@ -106,7 +109,38 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 5: Beskrivning -->
+                <!-- Row 5: DocType, DocSubtype -->
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <label class="${LABEL}">DocType</label>
+                    <input id="f-doctype" class="${INPUT}" type="text" />
+                  </div>
+                  <div>
+                    <label class="${LABEL}">DocSubtype</label>
+                    <input id="f-docsubtype" class="${INPUT}" type="text" />
+                  </div>
+                </div>
+
+                <!-- Row 6: Visas i elektroniska dokument, PDF-format -->
+                <div class="grid grid-cols-3 gap-4">
+                  <div>
+                    <label class="${LABEL}">Visas i elektroniska dokument?</label>
+                    <select id="f-visas-edok" class="${SELECT}">
+                      <option value="">Välj i listan</option>
+                      <option>Ja</option>
+                      <option>Nej</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="${LABEL}">PDF-format</label>
+                    <select id="f-pdf-format" class="${SELECT}">
+                      <option value="N">N</option>
+                      <option value="Y">Y</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Row 7: Beskrivning -->
                 <div>
                   <label class="${LABEL}">Beskrivning</label>
                   <textarea id="f-beskrivning" class="${INPUT}" rows="3" style="resize:vertical"></textarea>
@@ -321,6 +355,8 @@ class PageInfoprodukter extends HTMLElement {
       this.loadProducts(e.target.value);
     });
 
+    this.querySelector('#btn-ny').addEventListener('click', () => this.resetForm());
+
     this.querySelector('#btn-spara').addEventListener('mousedown', e => e.preventDefault());
     this.querySelector('#btn-spara').addEventListener('click', () => {
       const body = {
@@ -334,6 +370,10 @@ class PageInfoprodukter extends HTMLElement {
         avgiftsidInternet:       this.querySelector('#f-avg-internet').value.trim(),
         visningsstid:            this.querySelector('#f-visning').value,
         lagringstid:             this.querySelector('#f-lagring').value,
+        docType:                 this.querySelector('#f-doctype').value.trim(),
+        docSubtype:              this.querySelector('#f-docsubtype').value.trim(),
+        visasIElektroniskaDok:   this.querySelector('#f-visas-edok').value,
+        pdfFormat:               this.querySelector('#f-pdf-format').value,
         beskrivning:             this.querySelector('#f-beskrivning').value.trim(),
         defaultkanalPapper:      this.querySelector('#f-def-papper').checked,
         defaultkanalInternet:    this.querySelector('#f-def-internet').checked,
@@ -345,7 +385,12 @@ class PageInfoprodukter extends HTMLElement {
         debiteraIckeInternet:    (this.querySelector('input[name="ip-debitera"]:checked') ?? {}).value ?? 'Nej',
         meddelande:              editor().innerHTML,
       };
-      mockCreateInformationsprodukt(body);
+      const editId = this.querySelector('#f-id').dataset.editId;
+      if (editId) {
+        mockUpdateInformationsprodukt(editId, body);
+      } else {
+        mockCreateInformationsprodukt(body);
+      }
       this.loadProducts(this.querySelector('#filter-land').value);
       const msg = this.querySelector('#save-msg');
       msg.classList.remove('hidden');
@@ -364,13 +409,98 @@ class PageInfoprodukter extends HTMLElement {
     list.forEach(p => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><button class="link">${p.id}</button></td>
+        <td><button class="link" data-id="${p.id}">${p.id}</button></td>
         <td>${p.namn}</td>
         <td>${p.land}</td>
         <td style="color:#15803d">${p.status}</td>
       `;
+      tr.querySelector('button').addEventListener('click', () => this.fillForm(p.id));
       tbody.appendChild(tr);
     });
+  }
+
+  fillForm(id) {
+    const p = mockGetInformationsprodukt(id);
+    if (!p) return;
+
+    const q  = sel => this.querySelector(sel);
+    const setRadio = (name, val) => {
+      const rb = this.querySelector(`input[name="${name}"][value="${val}"]`);
+      if (rb) rb.checked = true;
+    };
+
+    q('#f-land').value        = p.land ?? '';
+    q('#f-id').value          = p.id ?? '';
+    q('#f-id').dataset.editId = p.id;
+    q('#f-namn').value        = p.namn ?? '';
+    q('#f-notifkat').value    = p.notifieringskategori ?? '';
+    q('#f-sys').value         = p.systembeteckning ?? '';
+    q('#f-avg-papper').value  = p.avgiftsidPapper ?? '';
+    q('#f-avg-internet').value = p.avgiftsidInternet ?? '';
+    q('#f-visning').value     = p.visningsstid ?? '';
+    q('#f-lagring').value     = p.lagringstid ?? '';
+    q('#f-doctype').value     = p.docType ?? '';
+    q('#f-docsubtype').value  = p.docSubtype ?? '';
+    q('#f-visas-edok').value  = p.visasIElektroniskaDok ?? '';
+    q('#f-pdf-format').value  = p.pdfFormat ?? 'N';
+    q('#f-beskrivning').value = p.beskrivning ?? '';
+
+    setRadio('ip-status',     p.status ?? 'Aktiv');
+    setRadio('ip-insyns',     p.insynsskyddat ?? 'Nej');
+    setRadio('ip-kanal-krav', p.kanalKrav ?? 'Ja');
+    setRadio('ip-debitera',   p.debiteraIckeInternet ?? 'Nej');
+
+    q('#f-def-papper').checked   = !!p.defaultkanalPapper;
+    q('#f-def-internet').checked = !!p.defaultkanalInternet;
+    q('#f-till-papper').checked  = !!p.tillatenKanalPapper;
+    q('#f-till-internet').checked = !!p.tillatenKanalInternet;
+    q('#f-oblig-papper').checked  = !!p.obligKanalPapper;
+    q('#f-oblig-internet').checked = !!p.obligKanalInternet;
+
+    const editor = q('#ip-f-meddelande');
+    editor.innerHTML = p.meddelande ?? '';
+    editor.classList.toggle('empty', !editor.textContent?.trim());
+
+    q('#form-title').textContent = `Informationsprodukt ${p.id} — ${p.namn}`;
+    q('#btn-ny').classList.remove('hidden');
+    q('#f-id').readOnly = true;
+
+    q('#form-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  resetForm() {
+    const q = sel => this.querySelector(sel);
+    q('#f-land').value         = '';
+    q('#f-id').value           = '';
+    q('#f-id').dataset.editId  = '';
+    q('#f-id').readOnly        = false;
+    q('#f-namn').value         = '';
+    q('#f-notifkat').value     = '';
+    q('#f-sys').value          = '';
+    q('#f-avg-papper').value   = '';
+    q('#f-avg-internet').value = '';
+    q('#f-visning').value      = '';
+    q('#f-lagring').value      = '';
+    q('#f-doctype').value      = '';
+    q('#f-docsubtype').value   = '';
+    q('#f-visas-edok').value   = '';
+    q('#f-pdf-format').value   = 'N';
+    q('#f-beskrivning').value  = '';
+
+    this.querySelector('input[name="ip-status"][value="Aktiv"]').checked    = true;
+    this.querySelector('input[name="ip-insyns"][value="Nej"]').checked      = true;
+    this.querySelector('input[name="ip-kanal-krav"][value="Ja"]').checked   = true;
+    this.querySelector('input[name="ip-debitera"][value="Nej"]').checked    = true;
+
+    ['#f-def-papper','#f-def-internet','#f-till-papper','#f-till-internet',
+     '#f-oblig-papper','#f-oblig-internet'].forEach(sel => { q(sel).checked = false; });
+
+    const editor = q('#ip-f-meddelande');
+    editor.innerHTML = '';
+    editor.classList.add('empty');
+
+    q('#form-title').textContent = 'Lägg till informationsprodukt';
+    q('#btn-ny').classList.add('hidden');
   }
 }
 
