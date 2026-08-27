@@ -1,0 +1,670 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "IAEM Kontakten API",
+    "version": "1.0.0",
+    "description": "REST API för IAEM Kontakten – Handelsbanken intern kommunikationshantering."
+  },
+  "servers": [
+    { "url": "http://localhost:9080/iaem/api/v1", "description": "Lokal Liberty-server" }
+  ],
+  "paths": {
+
+    "/kunder/{kundnr}": {
+      "get": {
+        "summary": "Hämta kund",
+        "tags": ["Kunder"],
+        "parameters": [
+          { "name": "kundnr", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "land",   "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Kund", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Kund" } } } },
+          "404": { "description": "Kund hittades inte" }
+        }
+      }
+    },
+
+    "/kunder/{kundnr}/meddelanden": {
+      "get": {
+        "summary": "Lista meddelanden för kund (paginerat)",
+        "tags": ["Meddelanden"],
+        "parameters": [
+          { "name": "kundnr", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "land",   "in": "query", "schema": { "type": "string" } },
+          { "name": "from",   "in": "query", "description": "ISO-datum (YYYY-MM-DD)", "schema": { "type": "string" } },
+          { "name": "to",     "in": "query", "description": "ISO-datum (YYYY-MM-DD)", "schema": { "type": "string" } },
+          { "name": "page",   "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "size",   "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginerad meddelandelista",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PagedMeddelanden" } } }
+          }
+        }
+      }
+    },
+
+    "/kunder/{kundnr}/meddelanden/{meddId}": {
+      "get": {
+        "summary": "Hämta enskilt meddelande med innehåll och bilagor",
+        "tags": ["Meddelanden"],
+        "parameters": [
+          { "name": "kundnr", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "meddId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Meddelandedetalj", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MeddelandeDetail" } } } },
+          "404": { "description": "Meddelande hittades inte" }
+        }
+      }
+    },
+
+    "/kunder/{kundnr}/utskick": {
+      "get": {
+        "summary": "Lista utskick för kund (paginerat)",
+        "tags": ["Utskick"],
+        "parameters": [
+          { "name": "kundnr",   "in": "path",  "required": true, "schema": { "type": "string" } },
+          { "name": "land",     "in": "query", "schema": { "type": "string" } },
+          { "name": "kategori", "in": "query", "schema": { "type": "string" } },
+          { "name": "from",     "in": "query", "description": "ISO-datum", "schema": { "type": "string" } },
+          { "name": "to",       "in": "query", "description": "ISO-datum", "schema": { "type": "string" } },
+          { "name": "page",     "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "size",     "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": { "description": "Paginerad utskickslista", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PagedUtskick" } } } }
+        }
+      }
+    },
+
+    "/kunder/{kundnr}/utskick/{utskickId}": {
+      "get": {
+        "summary": "Hämta enskilt utskick med innehåll och bilagor",
+        "tags": ["Utskick"],
+        "parameters": [
+          { "name": "kundnr",    "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "utskickId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Utskicksdetalj", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UtskickDetail" } } } },
+          "404": { "description": "Utskick hittades inte" }
+        }
+      }
+    },
+
+    "/kunder/{kundnr}/dokument": {
+      "get": {
+        "summary": "Sök dokument för kund",
+        "tags": ["Dokument"],
+        "parameters": [
+          { "name": "kundnr",     "in": "path",  "required": true, "schema": { "type": "string" } },
+          { "name": "land",       "in": "query", "schema": { "type": "string" } },
+          { "name": "kategori",   "in": "query", "schema": { "type": "string" } },
+          { "name": "avser",      "in": "query", "schema": { "type": "string" } },
+          { "name": "forbindelse","in": "query", "schema": { "type": "string" } },
+          { "name": "datumFran",  "in": "query", "description": "ISO-datum", "schema": { "type": "string" } },
+          { "name": "datumTill",  "in": "query", "description": "ISO-datum", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Dokumentlista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Dokument" } } } } }
+        }
+      }
+    },
+
+    "/kunder/{kundnr}/utskick-installningar": {
+      "get": {
+        "summary": "Hämta utskicksinställningar för kund",
+        "tags": ["Utskicksinställningar"],
+        "parameters": [
+          { "name": "kundnr", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Inställningslista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/UtskickInstallning" } } } } }
+        }
+      },
+      "put": {
+        "summary": "Spara utskicksinställningar för kund",
+        "tags": ["Utskicksinställningar"],
+        "parameters": [
+          { "name": "kundnr", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/UtskickInstallning" } } } }
+        },
+        "responses": {
+          "204": { "description": "Sparad" }
+        }
+      }
+    },
+
+    "/kuvert/{kuvertId}": {
+      "get": {
+        "summary": "Hämta kuvert",
+        "tags": ["Kuvert"],
+        "parameters": [
+          { "name": "kuvertId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Kuvert", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Kuvert" } } } },
+          "404": { "description": "Kuvert hittades inte" }
+        }
+      }
+    },
+
+    "/informationsprodukter": {
+      "get": {
+        "summary": "Lista informationsprodukter",
+        "tags": ["Informationsprodukter"],
+        "parameters": [
+          { "name": "land", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Produktlista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Informationsprodukt" } } } } }
+        }
+      },
+      "post": {
+        "summary": "Skapa informationsprodukt",
+        "tags": ["Informationsprodukter"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InformationsproduktInput" } } }
+        },
+        "responses": {
+          "201": { "description": "Skapad", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Informationsprodukt" } } } }
+        }
+      }
+    },
+
+    "/informationsprodukter/{id}": {
+      "put": {
+        "summary": "Uppdatera informationsprodukt",
+        "tags": ["Informationsprodukter"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InformationsproduktInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Uppdaterad", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Informationsprodukt" } } } },
+          "404": { "description": "Produkt hittades inte" }
+        }
+      }
+    },
+
+    "/debiteringsuppgifter": {
+      "get": {
+        "summary": "Lista debiteringsuppgifter",
+        "tags": ["Debiteringsuppgifter"],
+        "responses": {
+          "200": { "description": "Lista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Debiteringsuppgift" } } } } }
+        }
+      },
+      "post": {
+        "summary": "Skapa debiteringsuppgift",
+        "tags": ["Debiteringsuppgifter"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DebiteringsuppgiftInput" } } }
+        },
+        "responses": {
+          "201": { "description": "Skapad", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Debiteringsuppgift" } } } }
+        }
+      }
+    },
+
+    "/debiteringsuppgifter/{produktid}": {
+      "put": {
+        "summary": "Uppdatera debiteringsuppgift",
+        "tags": ["Debiteringsuppgifter"],
+        "parameters": [
+          { "name": "produktid", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DebiteringsuppgiftInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Uppdaterad", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Debiteringsuppgift" } } } },
+          "404": { "description": "Hittades inte" }
+        }
+      },
+      "delete": {
+        "summary": "Ta bort debiteringsuppgift",
+        "tags": ["Debiteringsuppgifter"],
+        "parameters": [
+          { "name": "produktid", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Borttagen" },
+          "404": { "description": "Hittades inte" }
+        }
+      }
+    },
+
+    "/massutskick": {
+      "get": {
+        "summary": "Lista massutskick",
+        "tags": ["Massutskick"],
+        "responses": {
+          "200": { "description": "Lista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/MassutskickItem" } } } } }
+        }
+      },
+      "post": {
+        "summary": "Skapa massutskick",
+        "tags": ["Massutskick"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MassutskickInput" } } }
+        },
+        "responses": {
+          "201": { "description": "Skapat", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MassutskickItem" } } } }
+        }
+      }
+    },
+
+    "/massutskick/{meddId}": {
+      "put": {
+        "summary": "Uppdatera massutskick",
+        "tags": ["Massutskick"],
+        "parameters": [
+          { "name": "meddId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MassutskickInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Uppdaterat", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/MassutskickItem" } } } },
+          "404": { "description": "Hittades inte" }
+        }
+      },
+      "delete": {
+        "summary": "Ta bort massutskick",
+        "tags": ["Massutskick"],
+        "parameters": [
+          { "name": "meddId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Borttaget" },
+          "404": { "description": "Hittades inte" }
+        }
+      }
+    },
+
+    "/massutskick/{meddId}/klarmarkera": {
+      "post": {
+        "summary": "Klarmarkera massutskick",
+        "tags": ["Massutskick"],
+        "parameters": [
+          { "name": "meddId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Klarmarkerat" },
+          "404": { "description": "Massutskick hittades inte" },
+          "409": { "description": "Redan klarmarkerat" }
+        }
+      }
+    },
+
+    "/publicering/installningar": {
+      "get": {
+        "summary": "Lista publiceringsinställningar (informationssamband)",
+        "tags": ["Publicering"],
+        "responses": {
+          "200": { "description": "Lista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Informationssamband" } } } } }
+        }
+      },
+      "post": {
+        "summary": "Skapa informationssamband",
+        "tags": ["Publicering"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InformationssambandInput" } } }
+        },
+        "responses": {
+          "201": { "description": "Skapat", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Informationssamband" } } } }
+        }
+      }
+    },
+
+    "/publicering/installningar/{id}": {
+      "put": {
+        "summary": "Uppdatera informationssamband",
+        "tags": ["Publicering"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InformationssambandInput" } } }
+        },
+        "responses": {
+          "200": { "description": "Uppdaterat", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Informationssamband" } } } },
+          "404": { "description": "Hittades inte" }
+        }
+      },
+      "delete": {
+        "summary": "Ta bort informationssamband",
+        "tags": ["Publicering"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Borttaget" },
+          "404": { "description": "Hittades inte" }
+        }
+      }
+    },
+
+    "/publicering/jobb": {
+      "get": {
+        "summary": "Lista publiceringsjobb",
+        "tags": ["Publicering"],
+        "responses": {
+          "200": { "description": "Lista", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/PubliceringJobb" } } } } }
+        }
+      }
+    },
+
+    "/publicering/jobb/{jobbId}/godkann": {
+      "post": {
+        "summary": "Godkänn eller neka publiceringsjobb",
+        "tags": ["Publicering"],
+        "parameters": [
+          { "name": "jobbId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GodkannRequest" } } }
+        },
+        "responses": {
+          "204": { "description": "Utförd" },
+          "404": { "description": "Jobb hittades inte" }
+        }
+      }
+    }
+
+  },
+
+  "components": {
+    "schemas": {
+
+      "Kund": {
+        "type": "object",
+        "properties": {
+          "kundnr":   { "type": "string" },
+          "kundnamn": { "type": "string" },
+          "land":     { "type": "string" }
+        }
+      },
+
+      "Meddelande": {
+        "type": "object",
+        "properties": {
+          "id":        { "type": "string" },
+          "kundnr":    { "type": "string" },
+          "kundnamn":  { "type": "string" },
+          "avsandare": { "type": "string" },
+          "mottagare": { "type": "string" },
+          "datum":     { "type": "string", "description": "ISO 8601 datum-tid" },
+          "kategori":  { "type": "string" },
+          "amne":      { "type": "string" },
+          "las":       { "type": "boolean" },
+          "borttaget": { "type": "boolean" },
+          "arkiverat": { "type": "boolean" },
+          "status":    { "type": "string" },
+          "kontor":    { "type": "string" }
+        }
+      },
+
+      "MeddelandeDetail": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Meddelande" },
+          {
+            "type": "object",
+            "properties": {
+              "innehall": { "type": "string", "description": "HTML-innehåll" },
+              "bilagor":  { "type": "array", "items": { "$ref": "#/components/schemas/Bilaga" } }
+            }
+          }
+        ]
+      },
+
+      "PagedMeddelanden": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "integer" },
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Meddelande" } }
+        }
+      },
+
+      "Bilaga": {
+        "type": "object",
+        "properties": {
+          "filnamn": { "type": "string" },
+          "storlek": { "type": "integer", "description": "Bytes" },
+          "url":     { "type": "string" }
+        }
+      },
+
+      "Utskick": {
+        "type": "object",
+        "properties": {
+          "id":        { "type": "string" },
+          "kundnr":    { "type": "string" },
+          "kundnamn":  { "type": "string" },
+          "avsandare": { "type": "string" },
+          "mottagare": { "type": "string" },
+          "datum":     { "type": "string" },
+          "kategori":  { "type": "string" },
+          "amne":      { "type": "string" },
+          "las":       { "type": "boolean" },
+          "borttaget": { "type": "boolean" },
+          "arkiverat": { "type": "boolean" },
+          "visasTill": { "type": "string" }
+        }
+      },
+
+      "UtskickDetail": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Utskick" },
+          {
+            "type": "object",
+            "properties": {
+              "innehall": { "type": "string" },
+              "bilagor":  { "type": "array", "items": { "$ref": "#/components/schemas/UtskickBilaga" } }
+            }
+          }
+        ]
+      },
+
+      "PagedUtskick": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "integer" },
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Utskick" } }
+        }
+      },
+
+      "UtskickBilaga": {
+        "type": "object",
+        "properties": {
+          "filnamn": { "type": "string" },
+          "url":     { "type": "string" }
+        }
+      },
+
+      "Dokument": {
+        "type": "object",
+        "properties": {
+          "dokumentnamn":  { "type": "string" },
+          "forbindelse":   { "type": "string" },
+          "dokumentdatum": { "type": "string" },
+          "utskicksdatum": { "type": "string" },
+          "skickatsTill":  { "type": "string", "enum": ["Digitalt", "Papper"] },
+          "visasTill":     { "type": "string" },
+          "last":          { "type": "boolean" },
+          "borttaget":     { "type": "boolean" },
+          "arkiverat":     { "type": "boolean" }
+        }
+      },
+
+      "UtskickInstallning": {
+        "type": "object",
+        "properties": {
+          "kategori":    { "type": "string" },
+          "avser":       { "type": "string" },
+          "forbindelse": { "type": "string" },
+          "papper":      { "type": "boolean" },
+          "internet":    { "type": "boolean" }
+        }
+      },
+
+      "Kuvert": {
+        "type": "object",
+        "properties": {
+          "kuvertId": { "type": "string" },
+          "kundnr":   { "type": "string" },
+          "kundnamn": { "type": "string" },
+          "datum":    { "type": "string" },
+          "mall":     { "type": "string" },
+          "kanal":    { "type": "string" },
+          "status":   { "type": "string", "enum": ["Levererat", "Ej levererat", "Returnerat"] }
+        }
+      },
+
+      "Informationsprodukt": {
+        "type": "object",
+        "properties": {
+          "id":                    { "type": "string" },
+          "namn":                  { "type": "string" },
+          "land":                  { "type": "string" },
+          "status":                { "type": "string", "enum": ["Aktiv", "Inaktiv"] },
+          "notifieringskategori":  { "type": "string" },
+          "systembeteckning":      { "type": "string" },
+          "insynsskyddad":         { "type": "boolean" },
+          "avgiftsidPapper":       { "type": "string" },
+          "avgiftsidInternet":     { "type": "string" },
+          "visningstidEArkivMan":  { "type": "integer" },
+          "lagringstidDiskMan":    { "type": "integer" },
+          "meddelandetext":        { "type": "string" }
+        }
+      },
+
+      "InformationsproduktInput": {
+        "type": "object",
+        "required": ["namn", "land", "status"],
+        "properties": {
+          "namn":                  { "type": "string" },
+          "land":                  { "type": "string" },
+          "status":                { "type": "string", "enum": ["Aktiv", "Inaktiv"] },
+          "notifieringskategori":  { "type": "string" },
+          "systembeteckning":      { "type": "string" },
+          "insynsskyddad":         { "type": "boolean" },
+          "avgiftsidPapper":       { "type": "string" },
+          "avgiftsidInternet":     { "type": "string" },
+          "visningstidEArkivMan":  { "type": "integer" },
+          "lagringstidDiskMan":    { "type": "integer" },
+          "meddelandetext":        { "type": "string" }
+        }
+      },
+
+      "Debiteringsuppgift": {
+        "type": "object",
+        "properties": {
+          "produktid":         { "type": "string" },
+          "meddelandeid":      { "type": "string" },
+          "systembeteckning":  { "type": "string" },
+          "antsKodInternet":   { "type": "string" },
+          "antsKodEjInternet": { "type": "string" },
+          "resultatstalle":    { "type": "string" }
+        }
+      },
+
+      "DebiteringsuppgiftInput": {
+        "type": "object",
+        "properties": {
+          "produktid":         { "type": "string" },
+          "meddelandeid":      { "type": "string" },
+          "systembeteckning":  { "type": "string" },
+          "antsKodInternet":   { "type": "string" },
+          "antsKodEjInternet": { "type": "string" },
+          "resultatstalle":    { "type": "string" }
+        }
+      },
+
+      "MassutskickItem": {
+        "type": "object",
+        "properties": {
+          "meddId":                { "type": "string" },
+          "land":                  { "type": "string" },
+          "avsandare":             { "type": "string" },
+          "amne":                  { "type": "string" },
+          "utskicksdatum":         { "type": "string" },
+          "notifieringskategori":  { "type": "string" },
+          "meddelande":            { "type": "string" },
+          "status":                { "type": "string", "enum": ["Under upplägg", "Klarmarkerad", "Skickad"] }
+        }
+      },
+
+      "MassutskickInput": {
+        "type": "object",
+        "required": ["land", "avsandare", "amne", "utskicksdatum"],
+        "properties": {
+          "land":                  { "type": "string" },
+          "avsandare":             { "type": "string" },
+          "amne":                  { "type": "string" },
+          "utskicksdatum":         { "type": "string" },
+          "notifieringskategori":  { "type": "string" },
+          "meddelande":            { "type": "string" }
+        }
+      },
+
+      "Informationssamband": {
+        "type": "object",
+        "properties": {
+          "id":                    { "type": "string" },
+          "systembeteckning":      { "type": "string" },
+          "informationsId":        { "type": "string" },
+          "publiceraAutomatiskt":  { "type": "boolean" }
+        }
+      },
+
+      "InformationssambandInput": {
+        "type": "object",
+        "required": ["systembeteckning", "informationsId"],
+        "properties": {
+          "systembeteckning":     { "type": "string" },
+          "informationsId":       { "type": "string" },
+          "publiceraAutomatiskt": { "type": "boolean" }
+        }
+      },
+
+      "PubliceringJobb": {
+        "type": "object",
+        "properties": {
+          "jobbId":            { "type": "string" },
+          "systembeteckning":  { "type": "string" },
+          "informationsId":    { "type": "string" },
+          "leveranstidpunkt":  { "type": "string" },
+          "status":            { "type": "string", "enum": ["Väntar", "Godkänd", "Nekad"] }
+        }
+      },
+
+      "GodkannRequest": {
+        "type": "object",
+        "required": ["godkand"],
+        "properties": {
+          "godkand": { "type": "boolean" }
+        }
+      }
+
+    }
+  }
+}
