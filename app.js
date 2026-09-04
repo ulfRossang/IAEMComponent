@@ -250,10 +250,10 @@
     { jobbId: "REVL-JOB-002", systembeteckning: "REVL", informationsId: "Q295100", leveranstidpunkt: "2026-06-02T08:00", status: "V\xE4ntar" }
   ];
   var INFORMATIONSPRODUKTER = [
-    { id: "32225", namn: "Konto, Account", land: "Sverige", status: "Aktiv" },
-    { id: "32228", namn: "Konto", land: "Sverige", status: "Aktiv" },
-    { id: "32230", namn: "Fondkonto", land: "Sverige", status: "Aktiv" },
-    { id: "32241", namn: "Bol\xE5n", land: "Sverige", status: "Aktiv" }
+    { id: "125", namn: "Konto, Account", land: "Sverige", status: "Aktiv" },
+    { id: "126", namn: "Konto", land: "Sverige", status: "Aktiv" },
+    { id: "127", namn: "Fondkonto", land: "Sverige", status: "Aktiv" },
+    { id: "128", namn: "Bol\xE5n", land: "Sverige", status: "Aktiv" }
   ];
   var DEBITERINGSUPPGIFTER = [
     { produktid: "DEB-001", meddelandeid: "-", systembeteckning: "INL\xC5", antsKodInternet: "217805", antsKodEjInternet: "217905", resultatstalle: "68821", status: "Aktiv" },

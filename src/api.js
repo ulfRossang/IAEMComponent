@@ -54,10 +54,10 @@ let PUBLICERING_JOBB = [
 ];
 
 let INFORMATIONSPRODUKTER = [
-  { id: '32225', namn: 'Konto, Account', land: 'Sverige', status: 'Aktiv' },
-  { id: '32228', namn: 'Konto',          land: 'Sverige', status: 'Aktiv' },
-  { id: '32230', namn: 'Fondkonto',      land: 'Sverige', status: 'Aktiv' },
-  { id: '32241', namn: 'Bolån',          land: 'Sverige', status: 'Aktiv' },
+  { id: '125', namn: 'Konto, Account', land: 'Sverige', status: 'Aktiv' },
+  { id: '126', namn: 'Konto',          land: 'Sverige', status: 'Aktiv' },
+  { id: '127', namn: 'Fondkonto',      land: 'Sverige', status: 'Aktiv' },
+  { id: '128', namn: 'Bolån',          land: 'Sverige', status: 'Aktiv' },
 ];
 
 let DEBITERINGSUPPGIFTER = [
