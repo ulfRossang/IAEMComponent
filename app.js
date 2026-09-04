@@ -1659,12 +1659,6 @@
                   </div>
                 </div>
 
-                <!-- Bank\xE4rendel\xE4nkar -->
-                <div class="flex gap-2">
-                  <button type="button" id="btn-add-banklink" class="${BTN_SMALL}">+ L\xE4gg till bank\xE4rendel\xE4nk</button>
-                  <button type="button" id="btn-remove-banklink" class="bg-white text-[#1565c0] border border-[#1565c0] rounded-full px-3 py-1 text-xs cursor-pointer hover:bg-[#eef2f7]">\u2212 Ta bort bank\xE4rendel\xE4nk</button>
-                </div>
-
                 <!-- Row 8: Meddelande i utskick via Internet -->
                 <div>
                   <label class="${LABEL}">Meddelande i utskick via Internet ${REQ}</label>

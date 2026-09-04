@@ -245,12 +245,6 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Bankärendelänkar -->
-                <div class="flex gap-2">
-                  <button type="button" id="btn-add-banklink" class="${BTN_SMALL}">+ Lägg till bankärendelänk</button>
-                  <button type="button" id="btn-remove-banklink" class="bg-white text-[#1565c0] border border-[#1565c0] rounded-full px-3 py-1 text-xs cursor-pointer hover:bg-[#eef2f7]">− Ta bort bankärendelänk</button>
-                </div>
-
                 <!-- Row 8: Meddelande i utskick via Internet -->
                 <div>
                   <label class="${LABEL}">Meddelande i utskick via Internet ${REQ}</label>
