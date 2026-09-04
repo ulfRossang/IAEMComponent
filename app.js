@@ -1570,93 +1570,54 @@
                   </div>
                 </div>
 
-                <!-- Kanaler & format \u2014 samlad sektion -->
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-4">
-                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide -mb-1">Kanaler och format</p>
-
-                  <!-- Kanal-kryssrutor -->
-                  <div class="grid grid-cols-3 gap-4">
-                    <div class="bg-white border border-gray-200 rounded-md px-3 py-2">
-                      <p class="${LABEL} font-medium">Defaultkanaler</p>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-def-papper" /> Papper
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-def-internet" /> Digitalt
-                        </label>
-                      </div>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-md px-3 py-2">
-                      <p class="${LABEL} font-medium">Till\xE5tna kanaler</p>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-till-papper" /> Papper
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-till-internet" /> Digitalt
-                        </label>
-                      </div>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-md px-3 py-2">
-                      <p class="${LABEL} font-medium">Obligatoriska kanaler</p>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-oblig-papper" /> Papper
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-oblig-internet" /> Digitalt
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Kanalval, Debitera, Visas i edok, PDF-format -->
-                  <div class="grid grid-cols-4 gap-4">
-                    <div>
-                      <label class="${LABEL}">N\xE5gon kanal m\xE5ste vara vald ${REQ}</label>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-kanal-krav" value="Ja" checked /> Ja
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-kanal-krav" value="Nej" /> Nej
-                        </label>
-                      </div>
-                    </div>
-                    <div>
-                      <label class="${LABEL}">Debitera icke Digitalkunder ${REQ}</label>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-debitera" value="Ja" /> Ja
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-debitera" value="Nej" checked /> Nej
-                        </label>
-                      </div>
-                    </div>
-                    <div>
-                      <label class="${LABEL}">Visas i elektroniska dokument?</label>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-visas-edok" id="f-visas-edok-ja" value="Ja" /> Ja
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-visas-edok" id="f-visas-edok-nej" value="Nej" /> Nej
-                        </label>
-                      </div>
-                    </div>
-                    <div>
-                      <label class="${LABEL}">PDF-format</label>
-                      <div class="flex gap-4 mt-1">
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-pdf-format" id="f-pdf-format-j" value="Y" /> Ja
-                        </label>
-                        <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="radio" name="ip-pdf-format" id="f-pdf-format-n" value="N" checked /> Nej
-                        </label>
-                      </div>
-                    </div>
+                <!-- Kanaler & format \u2014 kompakt -->
+                <div class="border border-gray-200 rounded p-3 space-y-2">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Kanaler och format</p>
+                  <table style="font-size:12px;border-collapse:collapse">
+                    <thead>
+                      <tr class="text-gray-500">
+                        <th style="width:70px;padding:2px 8px 4px 0;font-weight:500;text-align:left"></th>
+                        <th style="padding:2px 12px 4px;font-weight:500;text-align:center">Default</th>
+                        <th style="padding:2px 12px 4px;font-weight:500;text-align:center">Till\xE5ten</th>
+                        <th style="padding:2px 12px 4px;font-weight:500;text-align:center">Obligatorisk</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="padding:2px 8px 2px 0;color:#374151">Papper</td>
+                        <td style="text-align:center;padding:2px 12px"><input type="checkbox" id="f-def-papper" /></td>
+                        <td style="text-align:center;padding:2px 12px"><input type="checkbox" id="f-till-papper" /></td>
+                        <td style="text-align:center;padding:2px 12px"><input type="checkbox" id="f-oblig-papper" /></td>
+                      </tr>
+                      <tr>
+                        <td style="padding:2px 8px 2px 0;color:#374151">Digitalt</td>
+                        <td style="text-align:center;padding:2px 12px"><input type="checkbox" id="f-def-internet" /></td>
+                        <td style="text-align:center;padding:2px 12px"><input type="checkbox" id="f-till-internet" /></td>
+                        <td style="text-align:center;padding:2px 12px"><input type="checkbox" id="f-oblig-internet" /></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="flex flex-wrap gap-x-5 gap-y-1 pt-1" style="font-size:12px">
+                    <span class="flex items-center gap-2 text-gray-600">
+                      Kanal krav:
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-kanal-krav" value="Ja" checked /> Ja</label>
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-kanal-krav" value="Nej" /> Nej</label>
+                    </span>
+                    <span class="flex items-center gap-2 text-gray-600">
+                      Debitera icke digitalt:
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-debitera" value="Ja" /> Ja</label>
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-debitera" value="Nej" checked /> Nej</label>
+                    </span>
+                    <span class="flex items-center gap-2 text-gray-600">
+                      Visas i e-dok:
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-visas-edok" id="f-visas-edok-ja" value="Ja" /> Ja</label>
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-visas-edok" id="f-visas-edok-nej" value="Nej" /> Nej</label>
+                    </span>
+                    <span class="flex items-center gap-2 text-gray-600">
+                      PDF:
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-pdf-format" id="f-pdf-format-j" value="Y" /> Ja</label>
+                      <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ip-pdf-format" id="f-pdf-format-n" value="N" checked /> Nej</label>
+                    </span>
                   </div>
                 </div>
 
