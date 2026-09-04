@@ -40,7 +40,7 @@ class PageAdminUtskick extends HTMLElement {
                     <th>Avser</th>
                     <th>Förbindelse</th>
                     <th class="text-center">Papper</th>
-                    <th class="text-center">Internet</th>
+                    <th class="text-center">Digitalt</th>
                   </tr>
                 </thead>
                 <tbody id="settings-tbody"></tbody>

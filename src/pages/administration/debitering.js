@@ -39,11 +39,11 @@ class PageDebitering extends HTMLElement {
                     <input id="f-sys" class="${INPUT}" />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod internet</label>
+                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod digitalt</label>
                     <input id="f-ants-i" class="${INPUT}" />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod ej internet</label>
+                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod ej digitalt</label>
                     <input id="f-ants-ej" class="${INPUT}" />
                   </div>
                   <div>
@@ -83,8 +83,8 @@ class PageDebitering extends HTMLElement {
                       <th>Produkt-ID</th>
                       <th>Medd-ID</th>
                       <th>Systembeteckning</th>
-                      <th>ANTS-kod internet</th>
-                      <th>ANTS-kod ej internet</th>
+                      <th>ANTS-kod digitalt</th>
+                      <th>ANTS-kod ej digitalt</th>
                       <th>Resultatställe</th>
                       <th>Status</th>
                     </tr>

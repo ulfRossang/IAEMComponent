@@ -944,7 +944,7 @@
                     <th>Avser</th>
                     <th>F\xF6rbindelse</th>
                     <th class="text-center">Papper</th>
-                    <th class="text-center">Internet</th>
+                    <th class="text-center">Digitalt</th>
                   </tr>
                 </thead>
                 <tbody id="settings-tbody"></tbody>
@@ -1535,7 +1535,7 @@
                       <input id="f-avg-papper" class="${INPUT8}" />
                     </div>
                     <div>
-                      <label class="${LABEL}">Avgiftsid f\xF6r Internet ${REQ}</label>
+                      <label class="${LABEL}">Avgiftsid f\xF6r Digitalt ${REQ}</label>
                       <input id="f-avg-internet" class="${INPUT8}" />
                     </div>
                   </div>
@@ -1582,7 +1582,7 @@
                           <input type="checkbox" id="f-def-papper" /> Papper
                         </label>
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-def-internet" /> Internet
+                          <input type="checkbox" id="f-def-internet" /> Digitalt
                         </label>
                       </div>
                     </div>
@@ -1593,7 +1593,7 @@
                           <input type="checkbox" id="f-till-papper" /> Papper
                         </label>
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-till-internet" /> Internet
+                          <input type="checkbox" id="f-till-internet" /> Digitalt
                         </label>
                       </div>
                     </div>
@@ -1604,7 +1604,7 @@
                           <input type="checkbox" id="f-oblig-papper" /> Papper
                         </label>
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-oblig-internet" /> Internet
+                          <input type="checkbox" id="f-oblig-internet" /> Digitalt
                         </label>
                       </div>
                     </div>
@@ -1624,7 +1624,7 @@
                       </div>
                     </div>
                     <div>
-                      <label class="${LABEL}">Debitera icke Internetkunder ${REQ}</label>
+                      <label class="${LABEL}">Debitera icke Digitalkunder ${REQ}</label>
                       <div class="flex gap-4 mt-1">
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
                           <input type="radio" name="ip-debitera" value="Ja" /> Ja
@@ -1659,9 +1659,9 @@
                   </div>
                 </div>
 
-                <!-- Row 8: Meddelande i utskick via Internet -->
+                <!-- Row 8: Meddelande i utskick via Digitalt -->
                 <div>
-                  <label class="${LABEL}">Meddelande i utskick via Internet ${REQ}</label>
+                  <label class="${LABEL}">Meddelande i utskick via Digitalt ${REQ}</label>
                   <div style="border:1px solid #1565c0;position:relative">
                     <div style="display:flex;align-items:center;gap:0;padding:3px 8px;border-bottom:1px solid #1565c0;background:#fff;user-select:none">
                       <button type="button" id="ip-r"   title="Rensa formatering"       style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:bold 14px serif">R</button>
@@ -2053,11 +2053,11 @@
                     <input id="f-sys" class="${INPUT9}" />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod internet</label>
+                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod digitalt</label>
                     <input id="f-ants-i" class="${INPUT9}" />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod ej internet</label>
+                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod ej digitalt</label>
                     <input id="f-ants-ej" class="${INPUT9}" />
                   </div>
                   <div>
@@ -2097,8 +2097,8 @@
                       <th>Produkt-ID</th>
                       <th>Medd-ID</th>
                       <th>Systembeteckning</th>
-                      <th>ANTS-kod internet</th>
-                      <th>ANTS-kod ej internet</th>
+                      <th>ANTS-kod digitalt</th>
+                      <th>ANTS-kod ej digitalt</th>
                       <th>Resultatst\xE4lle</th>
                       <th>Status</th>
                     </tr>

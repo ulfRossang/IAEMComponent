@@ -121,7 +121,7 @@ class PageInfoprodukter extends HTMLElement {
                       <input id="f-avg-papper" class="${INPUT}" />
                     </div>
                     <div>
-                      <label class="${LABEL}">Avgiftsid för Internet ${REQ}</label>
+                      <label class="${LABEL}">Avgiftsid för Digitalt ${REQ}</label>
                       <input id="f-avg-internet" class="${INPUT}" />
                     </div>
                   </div>
@@ -168,7 +168,7 @@ class PageInfoprodukter extends HTMLElement {
                           <input type="checkbox" id="f-def-papper" /> Papper
                         </label>
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-def-internet" /> Internet
+                          <input type="checkbox" id="f-def-internet" /> Digitalt
                         </label>
                       </div>
                     </div>
@@ -179,7 +179,7 @@ class PageInfoprodukter extends HTMLElement {
                           <input type="checkbox" id="f-till-papper" /> Papper
                         </label>
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-till-internet" /> Internet
+                          <input type="checkbox" id="f-till-internet" /> Digitalt
                         </label>
                       </div>
                     </div>
@@ -190,7 +190,7 @@ class PageInfoprodukter extends HTMLElement {
                           <input type="checkbox" id="f-oblig-papper" /> Papper
                         </label>
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
-                          <input type="checkbox" id="f-oblig-internet" /> Internet
+                          <input type="checkbox" id="f-oblig-internet" /> Digitalt
                         </label>
                       </div>
                     </div>
@@ -210,7 +210,7 @@ class PageInfoprodukter extends HTMLElement {
                       </div>
                     </div>
                     <div>
-                      <label class="${LABEL}">Debitera icke Internetkunder ${REQ}</label>
+                      <label class="${LABEL}">Debitera icke Digitalkunder ${REQ}</label>
                       <div class="flex gap-4 mt-1">
                         <label class="flex items-center gap-2 text-sm cursor-pointer">
                           <input type="radio" name="ip-debitera" value="Ja" /> Ja
@@ -245,9 +245,9 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 8: Meddelande i utskick via Internet -->
+                <!-- Row 8: Meddelande i utskick via Digitalt -->
                 <div>
-                  <label class="${LABEL}">Meddelande i utskick via Internet ${REQ}</label>
+                  <label class="${LABEL}">Meddelande i utskick via Digitalt ${REQ}</label>
                   <div style="border:1px solid #1565c0;position:relative">
                     <div style="display:flex;align-items:center;gap:0;padding:3px 8px;border-bottom:1px solid #1565c0;background:#fff;user-select:none">
                       <button type="button" id="ip-r"   title="Rensa formatering"       style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:bold 14px serif">R</button>
