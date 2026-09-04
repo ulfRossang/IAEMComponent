@@ -38,14 +38,14 @@ class PageInfoprodukter extends HTMLElement {
                   </select>
                 </div>
 
-                <!-- Namn med språk + lägg till-lista -->
+                <!-- Namn med språk + land + lägg till-lista -->
                 <div class="flex items-start gap-3">
                   <label class="text-sm text-gray-700 w-28 shrink-0 pt-1.5">Namn ${REQ}</label>
                   <div class="flex-1 space-y-2">
                     <div class="flex gap-2">
                       <input id="f-namn" class="${INPUT}" placeholder="Ange namn" maxlength="20" style="max-width:200px" />
-                      <select id="f-sprak" class="${SELECT}" style="max-width:100px">
-                        <option value="">Välj</option>
+                      <select id="f-sprak" class="${SELECT}" style="max-width:80px">
+                        <option value="">Språk</option>
                         <option value="sv">sv</option>
                         <option value="no">no</option>
                         <option value="dk">dk</option>
@@ -60,6 +60,7 @@ class PageInfoprodukter extends HTMLElement {
                         <tr class="text-left text-gray-500 border-b border-gray-200">
                           <th class="font-normal pb-1" style="width:160px">Namn</th>
                           <th class="font-normal pb-1 px-3" style="width:36px">Språk</th>
+                          <th class="font-normal pb-1 px-3" style="width:36px">Land</th>
                           <th style="width:16px"></th>
                         </tr>
                       </thead>
@@ -415,7 +416,8 @@ class PageInfoprodukter extends HTMLElement {
       const namn  = this.querySelector('#f-namn').value.trim();
       const sprak = this.querySelector('#f-sprak').value;
       if (!namn) return;
-      this.namnLista.push({ namn, sprak });
+      const SPRAK_LAND_MAP = { sv:'SE', no:'NO', dk:'DK', fi:'FI', en:'GB', nl:'NL' };
+      this.namnLista.push({ namn, sprak, land: SPRAK_LAND_MAP[sprak] ?? '' });
       this.querySelector('#f-namn').value  = '';
       this.querySelector('#f-sprak').value = '';
       this.renderNamnLista();
@@ -440,39 +442,44 @@ class PageInfoprodukter extends HTMLElement {
       setTimeout(() => msg.classList.add('hidden'), 3000);
     });
 
+    const SPRAK_LAND = { sv:'SE', no:'NO', dk:'DK', fi:'FI', en:'GB', nl:'NL' };
+
     this.querySelector('#btn-spara').addEventListener('mousedown', e => e.preventDefault());
     this.querySelector('#btn-spara').addEventListener('click', () => {
-      const body = {
-        land:                    this.querySelector('#f-land').value,
-        namn:                    this.namnLista.map(e => e.namn).join(', '),
-        status:                  (this.querySelector('input[name="ip-status"]:checked') ?? {}).value ?? 'Aktiv',
-        notifieringskategori:    this.querySelector('#f-notifkat').value,
-        insynsskyddat:           (this.querySelector('input[name="ip-insyns"]:checked') ?? {}).value ?? 'Nej',
-        systembeteckning:        this.querySelector('#f-sys').value.trim(),
-        avgiftsidPapper:         this.querySelector('#f-avg-papper').value.trim(),
-        avgiftsidInternet:       this.querySelector('#f-avg-internet').value.trim(),
-        visningsstid:            this.querySelector('#f-visning').value,
-        lagringstid:             this.querySelector('#f-lagring').value,
-        docType:                 this.querySelector('#f-doctype').value.trim(),
-        docSubtype:              this.querySelector('#f-docsubtype').value.trim(),
-        visasIElektroniskaDok:   (this.querySelector('input[name="ip-visas-edok"]:checked') ?? {}).value ?? '',
-        pdfFormat:               (this.querySelector('input[name="ip-pdf-format"]:checked') ?? {}).value ?? 'N',
-        beskrivning:             this.querySelector('#f-beskrivning').value.trim(),
-        defaultkanalPapper:      this.querySelector('#f-def-papper').checked,
-        defaultkanalInternet:    this.querySelector('#f-def-internet').checked,
-        tillatenKanalPapper:     this.querySelector('#f-till-papper').checked,
-        tillatenKanalInternet:   this.querySelector('#f-till-internet').checked,
-        obligKanalPapper:        this.querySelector('#f-oblig-papper').checked,
-        obligKanalInternet:      this.querySelector('#f-oblig-internet').checked,
-        kanalKrav:               (this.querySelector('input[name="ip-kanal-krav"]:checked') ?? {}).value ?? 'Ja',
-        debiteraIckeInternet:    (this.querySelector('input[name="ip-debitera"]:checked') ?? {}).value ?? 'Nej',
-        meddelande:              editor().innerHTML,
+      const formLand = this.querySelector('#f-land').value;
+      const baseBody = {
+        status:               (this.querySelector('input[name="ip-status"]:checked') ?? {}).value ?? 'Aktiv',
+        notifieringskategori: this.querySelector('#f-notifkat').value,
+        insynsskyddat:        (this.querySelector('input[name="ip-insyns"]:checked') ?? {}).value ?? 'Nej',
+        systembeteckning:     this.querySelector('#f-sys').value.trim(),
+        avgiftsidPapper:      this.querySelector('#f-avg-papper').value.trim(),
+        avgiftsidInternet:    this.querySelector('#f-avg-internet').value.trim(),
+        visningsstid:         this.querySelector('#f-visning').value,
+        lagringstid:          this.querySelector('#f-lagring').value,
+        docType:              this.querySelector('#f-doctype').value.trim(),
+        docSubtype:           this.querySelector('#f-docsubtype').value.trim(),
+        visasIElektroniskaDok: (this.querySelector('input[name="ip-visas-edok"]:checked') ?? {}).value ?? '',
+        pdfFormat:            (this.querySelector('input[name="ip-pdf-format"]:checked') ?? {}).value ?? 'N',
+        beskrivning:          this.querySelector('#f-beskrivning').value.trim(),
+        defaultkanalPapper:   this.querySelector('#f-def-papper').checked,
+        defaultkanalInternet: this.querySelector('#f-def-internet').checked,
+        tillatenKanalPapper:  this.querySelector('#f-till-papper').checked,
+        tillatenKanalInternet: this.querySelector('#f-till-internet').checked,
+        obligKanalPapper:     this.querySelector('#f-oblig-papper').checked,
+        obligKanalInternet:   this.querySelector('#f-oblig-internet').checked,
+        kanalKrav:            (this.querySelector('input[name="ip-kanal-krav"]:checked') ?? {}).value ?? 'Ja',
+        debiteraIckeInternet: (this.querySelector('input[name="ip-debitera"]:checked') ?? {}).value ?? 'Nej',
+        meddelande:           editor().innerHTML,
+        namnLista:            this.namnLista,
       };
       const editId = this.querySelector('#f-id').dataset.editId;
       if (editId) {
-        mockUpdateInformationsprodukt(editId, body);
+        mockUpdateInformationsprodukt(editId, { ...baseBody, namn: this.namnLista.map(e => e.namn).join(', '), land: formLand });
       } else {
-        mockCreateInformationsprodukt(body);
+        const entries = this.namnLista.length > 0 ? this.namnLista : [{ namn: '', sprak: '', land: formLand }];
+        entries.forEach(entry => {
+          mockCreateInformationsprodukt({ ...baseBody, namn: entry.namn, sprak: entry.sprak, land: entry.land || SPRAK_LAND[entry.sprak] || formLand });
+        });
       }
       this.loadProducts(this.querySelector('#filter-land').value);
       const msg = this.querySelector('#save-msg');
@@ -512,7 +519,8 @@ class PageInfoprodukter extends HTMLElement {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td class="py-0.5 text-gray-800" style="width:160px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${entry.namn}">${entry.namn.slice(0,20)}</td>
-        <td class="py-0.5 px-3 text-gray-600" style="width:36px">${entry.sprak}</td>
+        <td class="py-0.5 px-3 text-gray-600" style="width:36px">${entry.sprak ?? ''}</td>
+        <td class="py-0.5 px-3 text-gray-600" style="width:36px">${entry.land ?? ''}</td>
         <td class="py-0.5" style="width:16px"><button type="button" class="text-gray-400 hover:text-red-500 text-xs leading-none" data-idx="${i}">✕</button></td>
       `;
       tr.querySelector('button').addEventListener('click', () => {
@@ -566,6 +574,12 @@ class PageInfoprodukter extends HTMLElement {
     editor.innerHTML = p.meddelande ?? '';
     editor.classList.toggle('empty', !editor.textContent?.trim());
 
+    const LAND_SPRAK = { SE:'sv', NO:'no', DK:'dk', FI:'fi', GB:'en', NL:'nl' };
+    this.namnLista = (Array.isArray(p.namnLista) && p.namnLista.length > 0)
+      ? [...p.namnLista]
+      : (p.namn ? [{ namn: p.namn, sprak: LAND_SPRAK[p.land] ?? '', land: p.land ?? '' }] : []);
+    this.renderNamnLista();
+
     q('#form-title').textContent = `Informationsprodukt ${p.id} — ${p.namn}`;
     q('#btn-ny').classList.remove('hidden');
     q('#f-id').readOnly = true;
@@ -581,6 +595,8 @@ class PageInfoprodukter extends HTMLElement {
     q('#f-id').readOnly       = false;
     q('#form-title').textContent = 'Lägg till informationsprodukt';
     q('#btn-ny').classList.add('hidden');
+    this.namnLista = [];
+    this.renderNamnLista();
     q('#form-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
