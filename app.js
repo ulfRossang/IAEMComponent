@@ -1742,6 +1742,7 @@
                       <th>Namn</th>
                       <th>Land</th>
                       <th>Status</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody id="products-tbody"></tbody>
@@ -1907,8 +1908,10 @@
         <td>${p.namn}</td>
         <td>${p.land}</td>
         <td style="color:#15803d">${p.status}</td>
+        <td><button class="clone-btn ${BTN_SMALL}" data-id="${p.id}">Kopiera</button></td>
       `;
-        tr.querySelector("button").addEventListener("click", () => this.fillForm(p.id));
+        tr.querySelector("button.link").addEventListener("click", () => this.fillForm(p.id));
+        tr.querySelector("button.clone-btn").addEventListener("click", () => this.cloneForm(p.id));
         tbody.appendChild(tr);
       });
     }
@@ -1970,6 +1973,16 @@
       q("#form-title").textContent = `Informationsprodukt ${p.id} \u2014 ${p.namn}`;
       q("#btn-ny").classList.remove("hidden");
       q("#f-id").readOnly = true;
+      q("#form-title").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    cloneForm(id) {
+      this.fillForm(id);
+      const q = (sel) => this.querySelector(sel);
+      q("#f-id").value = "";
+      q("#f-id").dataset.editId = "";
+      q("#f-id").readOnly = false;
+      q("#form-title").textContent = "L\xE4gg till informationsprodukt";
+      q("#btn-ny").classList.add("hidden");
       q("#form-title").scrollIntoView({ behavior: "smooth", block: "start" });
     }
     resetForm() {
