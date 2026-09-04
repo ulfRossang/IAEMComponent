@@ -1858,7 +1858,7 @@
       this.querySelector("#btn-spara").addEventListener("click", () => {
         const body = {
           land: this.querySelector("#f-land").value,
-          namn: this.querySelector("#f-namn").value.trim(),
+          namn: this.namnLista.map((e) => e.namn).join(", "),
           status: (this.querySelector('input[name="ip-status"]:checked') ?? {}).value ?? "Aktiv",
           notifieringskategori: this.querySelector("#f-notifkat").value,
           insynsskyddat: (this.querySelector('input[name="ip-insyns"]:checked') ?? {}).value ?? "Nej",
