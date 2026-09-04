@@ -99,67 +99,34 @@ class PageMassutskick extends HTMLElement {
                 <!-- Row 6: Meddelande -->
                 <div>
                   <label class="${LABEL}">Meddelande ${REQ}</label>
-                  <div class="border border-gray-300 rounded-md overflow-hidden">
-                    <!-- Toolbar -->
-                    <div class="flex flex-wrap items-center gap-1 px-2 py-1.5 border-b border-gray-200 bg-gray-50">
-
-                      <!-- Font family -->
-                      <select id="tb-font" class="text-xs border border-gray-300 rounded px-1 py-0.5 bg-white focus:outline-none cursor-pointer">
-                        <option value="inherit">Standard</option>
+                  <div style="border:1px solid #1565c0;position:relative">
+                    <div style="display:flex;align-items:center;gap:0;padding:3px 8px;border-bottom:1px solid #1565c0;background:#fff;user-select:none">
+                      <button type="button" id="mas-r"   title="Rensa formatering"       style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:bold 14px serif">R</button>
+                      <button type="button" id="mas-ul"  title="Punktlista"               style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:13px sans-serif">&#x2A76;&#x2261;</button>
+                      <button type="button" id="mas-ol"  title="Numrerad lista"           style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:13px sans-serif">&#x2261;</button>
+                      <button type="button" id="mas-f"   title="Teckensnitt"              style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:bold 14px sans-serif">F</button>
+                      <button type="button" id="mas-src" title="Visa/redigera HTML"       style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:bold 12px monospace">&lt;/&gt;</button>
+                      <button type="button" id="mas-dyn" title="Infoga dynamisk variabel" style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:14px sans-serif">&#x2299;</button>
+                      <select id="mas-font-sel" style="display:none;margin-left:6px;font-size:12px;border:1px solid #aaa;padding:1px 3px">
+                        <option value="">Standard</option>
                         <option value="Arial, sans-serif">Arial</option>
                         <option value="Georgia, serif">Georgia</option>
                         <option value="'Times New Roman', serif">Times New Roman</option>
                         <option value="'Courier New', monospace">Courier New</option>
                         <option value="Verdana, sans-serif">Verdana</option>
                       </select>
-
-                      <!-- Font size -->
-                      <select id="tb-size" class="text-xs border border-gray-300 rounded px-1 py-0.5 bg-white focus:outline-none cursor-pointer w-16">
-                        <option value="">Storlek</option>
-                        <option value="10px">10</option>
-                        <option value="12px">12</option>
-                        <option value="14px" selected>14</option>
-                        <option value="16px">16</option>
-                        <option value="18px">18</option>
-                        <option value="20px">20</option>
-                        <option value="24px">24</option>
-                        <option value="32px">32</option>
-                      </select>
-
-                      <span class="text-gray-300 mx-0.5">|</span>
-
-                      <!-- Headings -->
-                      <button type="button" data-block="h1" class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">H1</button>
-                      <button type="button" data-block="h2" class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">H2</button>
-                      <button type="button" data-block="h3" class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">H3</button>
-                      <button type="button" data-block="p"  class="${BTN_SMALL} !rounded !px-2 !py-0.5">¶</button>
-
-                      <span class="text-gray-300 mx-0.5">|</span>
-
-                      <!-- Inline formatting -->
-                      <button type="button" data-cmd="bold"      class="${BTN_SMALL} !rounded !px-2 !py-0.5 font-bold">B</button>
-                      <button type="button" data-cmd="italic"    class="${BTN_SMALL} !rounded !px-2 !py-0.5 italic">I</button>
-                      <button type="button" data-cmd="underline" class="${BTN_SMALL} !rounded !px-2 !py-0.5 underline">U</button>
-
-                      <span class="text-gray-300 mx-0.5">|</span>
-
-                      <!-- Alignment -->
-                      <button type="button" data-cmd="justifyLeft"   class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Vänster">⬅</button>
-                      <button type="button" data-cmd="justifyCenter" class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Centrera">↔</button>
-                      <button type="button" data-cmd="justifyRight"  class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Höger">➡</button>
-
-                      <span class="text-gray-300 mx-0.5">|</span>
-
-                      <!-- Lists -->
-                      <button type="button" data-cmd="insertUnorderedList" class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Punktlista">≡</button>
-                      <button type="button" data-cmd="insertOrderedList"   class="${BTN_SMALL} !rounded !px-2 !py-0.5" title="Numrerad lista">1.</button>
-
+                      <div id="mas-dyn-popup" style="display:none;position:absolute;top:28px;left:0;background:#fff;border:1px solid #1565c0;z-index:10;padding:4px 0;box-shadow:0 2px 6px rgba(0,0,0,.15)">
+                        ${['DYN1','DYN2','DYN3','DYN4','DYN5'].map(d =>
+                          `<button type="button" data-dyn="${d}" style="display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:4px 14px;color:#1a3a6b;font-size:12px;white-space:nowrap">${d}</button>`
+                        ).join('')}
+                      </div>
                     </div>
-                    <!-- Editable area -->
                     <div id="f-meddelande"
                          contenteditable="true"
-                         class="min-h-[160px] px-3 py-2 text-sm text-gray-700 focus:outline-none"
+                         style="min-height:120px;padding:6px 8px;font-size:13px;font-family:inherit;outline:none;overflow:auto"
                          data-placeholder="Meddelandetext... Använd DYN1–DYN5 för dynamiska variabler."></div>
+                    <textarea id="f-meddelande-src"
+                              style="display:none;width:100%;min-height:120px;padding:6px 8px;font-size:12px;font-family:monospace;border:none;outline:none;resize:none;box-sizing:border-box"></textarea>
                   </div>
                 </div>
 
@@ -220,49 +187,61 @@ class PageMassutskick extends HTMLElement {
   }
 
   init() {
-    const editor = () => this.querySelector('#f-meddelande');
+    const editor  = () => this.querySelector('#f-meddelande');
+    const srcArea = () => this.querySelector('#f-meddelande-src');
+    let srcMode = false;
 
-    // Simple toolbar buttons (execCommand)
-    this.querySelectorAll('button[data-cmd]').forEach(btn => {
-      btn.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        document.execCommand(btn.dataset['cmd'], false);
-        editor().focus();
-      });
+    const rteCmd = (cmd) => { document.execCommand(cmd, false); editor().focus(); };
+
+    this.querySelector('#mas-r').addEventListener('mousedown',  e => { e.preventDefault(); rteCmd('removeFormat'); });
+    this.querySelector('#mas-ul').addEventListener('mousedown', e => { e.preventDefault(); rteCmd('insertUnorderedList'); });
+    this.querySelector('#mas-ol').addEventListener('mousedown', e => { e.preventDefault(); rteCmd('insertOrderedList'); });
+
+    const fontSel = this.querySelector('#mas-font-sel');
+    this.querySelector('#mas-f').addEventListener('mousedown', e => {
+      e.preventDefault();
+      fontSel.style.display = fontSel.style.display === 'none' ? 'inline-block' : 'none';
+      if (fontSel.style.display !== 'none') fontSel.focus();
     });
-
-    // Heading / block format buttons
-    this.querySelectorAll('button[data-block]').forEach(btn => {
-      btn.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        document.execCommand('formatBlock', false, btn.dataset['block']);
-        editor().focus();
-      });
-    });
-
-    // Font family
-    this.querySelector('#tb-font').addEventListener('change', (e) => {
-      const font = e.target.value;
-      document.execCommand('fontName', false, font);
+    fontSel.addEventListener('change', (e) => {
+      if (e.target.value) document.execCommand('fontName', false, e.target.value);
+      fontSel.style.display = 'none';
       editor().focus();
     });
 
-    // Font size — wrap selection in a <span> with explicit font-size
-    this.querySelector('#tb-size').addEventListener('change', (e) => {
-      const size = e.target.value;
-      if (!size) return;
-      const sel = window.getSelection();
-      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
-        const range = sel.getRangeAt(0);
-        const span = document.createElement('span');
-        span.style.fontSize = size;
-        range.surroundContents(span);
-        sel.removeAllRanges();
+    this.querySelector('#mas-src').addEventListener('mousedown', e => {
+      e.preventDefault();
+      srcMode = !srcMode;
+      if (srcMode) {
+        srcArea().value = editor().innerHTML;
+        editor().style.display = 'none';
+        srcArea().style.display = 'block';
+        srcArea().focus();
+      } else {
+        editor().innerHTML = srcArea().value;
+        srcArea().style.display = 'none';
+        editor().style.display = 'block';
+        editor().focus();
       }
-      editor().focus();
     });
 
-    // Placeholder behaviour for contenteditable
+    const dynPopup = this.querySelector('#mas-dyn-popup');
+    this.querySelector('#mas-dyn').addEventListener('mousedown', e => {
+      e.preventDefault();
+      dynPopup.style.display = dynPopup.style.display === 'none' ? 'block' : 'none';
+    });
+    dynPopup.querySelectorAll('button[data-dyn]').forEach(btn => {
+      btn.addEventListener('mousedown', e => {
+        e.preventDefault();
+        document.execCommand('insertText', false, btn.dataset['dyn']);
+        dynPopup.style.display = 'none';
+        editor().focus();
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!this.contains(e.target)) dynPopup.style.display = 'none';
+    });
+
     const updatePlaceholder = () => {
       const el = editor();
       el.classList.toggle('empty', !el.textContent?.trim());
