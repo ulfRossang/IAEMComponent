@@ -1440,19 +1440,19 @@
                 </div>
                 <div class="mt-3 border-t border-gray-100"></div>
               </div>
-              <div class="px-4 pb-4 pt-3 space-y-4">
+              <div class="px-4 pb-4 pt-3 space-y-3">
 
-                <!-- Land -->
+                <!-- Rad 1: Land -->
                 <div class="flex items-center gap-3">
                   <label class="text-sm text-gray-700 w-28 shrink-0">Land ${REQ}</label>
-                  <select id="f-land" class="${SELECT2}" style="max-width:220px">
+                  <select id="f-land" class="${SELECT2}" style="max-width:120px">
                     <option value="">V\xE4lj land</option>
                     <option>SE</option><option>NO</option><option>DK</option>
                     <option>FI</option><option>GB</option><option>NL</option>
                   </select>
                 </div>
 
-                <!-- Namn med spr\xE5k + land + l\xE4gg till-lista -->
+                <!-- Rad 2: Namn med namnlista -->
                 <div class="flex items-start gap-3">
                   <label class="text-sm text-gray-700 w-28 shrink-0 pt-1.5">Namn ${REQ}</label>
                   <div class="flex-1 space-y-2">
@@ -1483,11 +1483,11 @@
                   </div>
                 </div>
 
-                <!-- Id, Notifieringskategori -->
+                <!-- Rad 3: Id | Notifieringskategori | Systembeteckning -->
                 <div class="grid grid-cols-3 gap-4">
                   <div>
                     <label class="${LABEL}">Id ${REQ}</label>
-                    <input id="f-id" class="${INPUT8}" />
+                    <input id="f-id" class="${INPUT8}" style="max-width:120px" />
                   </div>
                   <div>
                     <label class="${LABEL}">Notifieringskategori ${REQ}</label>
@@ -1496,77 +1496,67 @@
                       ${NOTIF_KAT.map((k) => `<option>${k}</option>`).join("")}
                     </select>
                   </div>
+                  <div>
+                    <label class="${LABEL}">Systembeteckning</label>
+                    <input id="f-sys" class="${INPUT8}" />
+                  </div>
                 </div>
 
-                <!-- Status, Insynsskyddat dokument -->
-                <div class="grid grid-cols-3 gap-4">
+                <!-- Rad 4: Status | Insynsskyddat | Avgiftsid Papper | Avgiftsid Digitalt | Visningsstid | Lagringstid -->
+                <div class="grid grid-cols-6 gap-4 items-start">
                   <div>
                     <label class="${LABEL}">Status ${REQ}</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <div class="flex gap-3 mt-1">
+                      <label class="flex items-center gap-1 text-sm cursor-pointer">
                         <input type="radio" name="ip-status" value="Aktiv" checked /> Aktiv
                       </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
+                      <label class="flex items-center gap-1 text-sm cursor-pointer">
                         <input type="radio" name="ip-status" value="Inaktiv" /> Inaktiv
                       </label>
                     </div>
                   </div>
                   <div>
-                    <label class="${LABEL}">Insynsskyddat dokument ${REQ}</label>
-                    <div class="flex gap-4 mt-1">
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <label class="${LABEL}">Insynsskyddat ${REQ}</label>
+                    <div class="flex gap-3 mt-1">
+                      <label class="flex items-center gap-1 text-sm cursor-pointer">
                         <input type="radio" name="ip-insyns" value="Ja" /> Ja
                       </label>
-                      <label class="flex items-center gap-2 text-sm cursor-pointer">
+                      <label class="flex items-center gap-1 text-sm cursor-pointer">
                         <input type="radio" name="ip-insyns" value="Nej" checked /> Nej
                       </label>
                     </div>
                   </div>
+                  <div>
+                    <label class="${LABEL}">Avgiftsid Papper ${REQ}</label>
+                    <input id="f-avg-papper" class="${INPUT8}" style="max-width:80px" />
+                  </div>
+                  <div>
+                    <label class="${LABEL}">Avgiftsid Digitalt ${REQ}</label>
+                    <input id="f-avg-internet" class="${INPUT8}" style="max-width:80px" />
+                  </div>
+                  <div>
+                    <label class="${LABEL}">Visningsstid e-arkiv (m\xE5n) ${REQ}</label>
+                    <input id="f-visning" class="${INPUT8}" type="number" min="0" style="max-width:80px" />
+                  </div>
+                  <div>
+                    <label class="${LABEL}">Lagringstid disk (m\xE5n) ${REQ}</label>
+                    <input id="f-lagring" class="${INPUT8}" type="number" min="0" style="max-width:80px" />
+                  </div>
                 </div>
 
-                <!-- Row 3: Systembeteckning | Avgiftsid Papper+Internet | Beskrivning -->
+                <!-- Rad 5: DocType | DocSubtype | Beskrivning -->
                 <div class="grid grid-cols-3 gap-4 items-start">
                   <div>
-                    <label class="${LABEL}">Systembeteckning</label>
-                    <input id="f-sys" class="${INPUT8}" />
-                  </div>
-                  <div class="space-y-3">
-                    <div>
-                      <label class="${LABEL}">Avgiftsid f\xF6r Papper ${REQ}</label>
-                      <input id="f-avg-papper" class="${INPUT8}" />
-                    </div>
-                    <div>
-                      <label class="${LABEL}">Avgiftsid f\xF6r Digitalt ${REQ}</label>
-                      <input id="f-avg-internet" class="${INPUT8}" />
-                    </div>
-                  </div>
-                  <div>
-                    <label class="${LABEL}">Beskrivning</label>
-                    <textarea id="f-beskrivning" class="${INPUT8}" rows="4" style="resize:vertical"></textarea>
-                  </div>
-                </div>
-
-                <!-- Row 4: Visningsstid, Lagringstid -->
-                <div class="grid grid-cols-3 gap-4">
-                  <div>
-                    <label class="${LABEL}">Visningsstid i e-arkiv f\xF6r kund (m\xE5nader) ${REQ}</label>
-                    <input id="f-visning" class="${INPUT8}" type="number" min="0" />
-                  </div>
-                  <div>
-                    <label class="${LABEL}">Lagringstid p\xE5 disk (m\xE5nader) ${REQ}</label>
-                    <input id="f-lagring" class="${INPUT8}" type="number" min="0" />
-                  </div>
-                </div>
-
-                <!-- Row 5: DocType, DocSubtype -->
-                <div class="grid grid-cols-3 gap-4">
-                  <div>
-                    <label class="${LABEL}">DocType</label>
+                    <label class="${LABEL}">DokumentTyp</label>
                     <input id="f-doctype" class="${INPUT8}" type="text" />
                   </div>
                   <div>
-                    <label class="${LABEL}">DocSubtype</label>
+                    <label class="${LABEL}">DokumentSubtyp</label>
                     <input id="f-docsubtype" class="${INPUT8}" type="text" />
+                  </div>
+                  <div>
+                    <label class="${LABEL}">Beskrivning</label>
+                    <textarea id="f-beskrivning" class="${INPUT8}" rows="2" style="resize:vertical"></textarea>
                   </div>
                 </div>
 
