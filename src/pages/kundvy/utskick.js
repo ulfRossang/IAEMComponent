@@ -20,7 +20,7 @@ class PageUtskick extends HTMLElement {
             <div class="flex items-end gap-4 flex-wrap">
               <div>
                 <label class="block text-sm text-gray-700 mb-1">Kundnummer <span class="text-red-600">*</span></label>
-                <input id="kundnr" class="${INPUT} w-52" placeholder="KD-XXXXX" />
+                <input id="kundnr" class="${INPUT} w-52" placeholder="KASSAD-XXXXX" />
               </div>
               <button id="btn-hamta" class="${BTN}">Hämta utskick</button>
             </div>

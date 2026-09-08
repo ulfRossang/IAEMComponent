@@ -211,43 +211,43 @@
     return iso.replace("T", " ").substring(0, 16);
   }
   var KUNDER = {
-    "KD-71042": { kundnr: "KD-71042", kundnamn: "Kund #71042", land: "Sverige" },
-    "KD-38815": { kundnr: "KD-38815", kundnamn: "Kund #38815", land: "Sverige" },
-    "KD-90423": { kundnr: "KD-90423", kundnamn: "Kund #90423", land: "Sverige" }
+    "KASSAD-71042": { kundnr: "KASSAD-71042", kundnamn: "Kund #71042", land: "Sverige" },
+    "KASSAD-38815": { kundnr: "KASSAD-38815", kundnamn: "Kund #38815", land: "Sverige" },
+    "KASSAD-90423": { kundnr: "KASSAD-90423", kundnamn: "Kund #90423", land: "Sverige" }
   };
   var MEDDELANDEN = [
-    { id: "MSG-2024-0041", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Testenv 7", mottagare: "Kund #71042", datum: "2025-01-22T09:58", kategori: "Digital", amne: "Kontoutdrag februari", las: true, borttaget: false, arkiverat: true, status: "Skickat", kontor: "SE-6292", innehall: "Ditt kontoutdrag f\xF6r februari finns tillg\xE4ngligt i din e-brevl\xE5da.", bilagor: [{ filnamn: "kontoutdrag-feb.pdf", storlek: 15360, url: "/files/kontoutdrag-feb.pdf" }] },
-    { id: "MSG-2024-0039", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-02-10T14:20", kategori: "Kontoutdrag", amne: "Kontoutdrag januari", las: false, borttaget: false, arkiverat: false, status: "Skickat", kontor: "SE-6292", innehall: "Ditt kontoutdrag f\xF6r januari finns tillg\xE4ngligt.", bilagor: [{ filnamn: "kontoutdrag-jan.pdf", storlek: 14080, url: "/files/kontoutdrag-jan.pdf" }] },
-    { id: "MSG-2024-0038", kundnr: "KD-38815", kundnamn: "Kund #38815", avsandare: "Handelsbanken", mottagare: "Kund #38815", datum: "2025-02-10T14:20", kategori: "Kontoutdrag", amne: "Kontoutdrag januari", las: false, borttaget: false, arkiverat: false, status: "Skickat", kontor: "SE-6292", innehall: "Ditt kontoutdrag f\xF6r januari finns tillg\xE4ngligt.", bilagor: [] },
-    { id: "MSG-2024-0035", kundnr: "KD-90423", kundnamn: "Kund #90423", avsandare: "Handelsbanken", mottagare: "Kund #90423", datum: "2025-03-01T08:10", kategori: "Avtal", amne: "Nytt kortavtal", las: true, borttaget: false, arkiverat: false, status: "Skickat", kontor: "SE-6292", innehall: "Bekr\xE4ftelse p\xE5 ditt nya kortavtal bifogas.", bilagor: [{ filnamn: "kortavtal.pdf", storlek: 20480, url: "/files/kortavtal.pdf" }] }
+    { id: "MSG-2024-0041", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Testenv 7", mottagare: "Kund #71042", datum: "2025-01-22T09:58", kategori: "Digital", amne: "Kontoutdrag februari", las: true, borttaget: false, arkiverat: true, status: "Skickat", kontor: "SE-6292", innehall: "Ditt kontoutdrag f\xF6r februari finns tillg\xE4ngligt i din e-brevl\xE5da.", bilagor: [{ filnamn: "kontoutdrag-feb.pdf", storlek: 15360, url: "/files/kontoutdrag-feb.pdf" }] },
+    { id: "MSG-2024-0039", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-02-10T14:20", kategori: "Kontoutdrag", amne: "Kontoutdrag januari", las: false, borttaget: false, arkiverat: false, status: "Skickat", kontor: "SE-6292", innehall: "Ditt kontoutdrag f\xF6r januari finns tillg\xE4ngligt.", bilagor: [{ filnamn: "kontoutdrag-jan.pdf", storlek: 14080, url: "/files/kontoutdrag-jan.pdf" }] },
+    { id: "MSG-2024-0038", kundnr: "KASSAD-38815", kundnamn: "Kund #38815", avsandare: "Handelsbanken", mottagare: "Kund #38815", datum: "2025-02-10T14:20", kategori: "Kontoutdrag", amne: "Kontoutdrag januari", las: false, borttaget: false, arkiverat: false, status: "Skickat", kontor: "SE-6292", innehall: "Ditt kontoutdrag f\xF6r januari finns tillg\xE4ngligt.", bilagor: [] },
+    { id: "MSG-2024-0035", kundnr: "KASSAD-90423", kundnamn: "Kund #90423", avsandare: "Handelsbanken", mottagare: "Kund #90423", datum: "2025-03-01T08:10", kategori: "Avtal", amne: "Nytt kortavtal", las: true, borttaget: false, arkiverat: false, status: "Skickat", kontor: "SE-6292", innehall: "Bekr\xE4ftelse p\xE5 ditt nya kortavtal bifogas.", bilagor: [{ filnamn: "kortavtal.pdf", storlek: 20480, url: "/files/kortavtal.pdf" }] }
   ];
   var UTSKICK = [
-    { id: "UTK-2025-0001", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-19T16:35", kategori: "Avr\xE4kningsnota", amne: "Avr\xE4kningsnota nov", las: true, borttaget: false, arkiverat: true, visasTill: "2036-03-20", innehall: "Din fondorder \xE4r genomf\xF6rd enligt bifogad avr\xE4kningsnota.", bilagor: [{ filnamn: "Avr\xE4kningsnota nov.pdf", url: "/files/avrakningsnota-nov.pdf" }] },
-    { id: "UTK-2025-0002", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-10T15:40", kategori: "Kontoutdrag", amne: "Kontoutdrag okt", las: true, borttaget: false, arkiverat: false, visasTill: "2036-03-20", innehall: "Ditt kontoutdrag f\xF6r oktober 2025 finns tillg\xE4ngligt.", bilagor: [{ filnamn: "Kontoutdrag okt.pdf", url: "/files/kontoutdrag-okt.pdf" }] },
-    { id: "UTK-2025-0003", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-04T11:22", kategori: "Avr\xE4kningsnota", amne: "Avr\xE4kningsnota okt", las: false, borttaget: false, arkiverat: false, visasTill: "2036-03-20", innehall: "Din fondorder \xE4r genomf\xF6rd enligt bifogad avr\xE4kningsnota.", bilagor: [{ filnamn: "Avr\xE4kningsnota okt.pdf", url: "/files/avrakningsnota-okt.pdf" }] },
-    { id: "UTK-2025-0004", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-03T12:44", kategori: "Bokf\xF6ringsavi", amne: "Bokf\xF6ringsavi nov", las: false, borttaget: false, arkiverat: false, visasTill: "2036-03-20", innehall: "Bokf\xF6ringsavi f\xF6r november bifogad.", bilagor: [{ filnamn: "Bokf\xF6ringsavi nov.pdf", url: "/files/bokforingsavi-nov.pdf" }] },
-    { id: "UTK-2025-0005", kundnr: "KD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-08-18T10:56", kategori: "Avtal", amne: "IGDH Test doktyp 2", las: true, borttaget: false, arkiverat: true, visasTill: "2036-03-20", innehall: "Avtalsbekr\xE4ftelse bifogad.", bilagor: [{ filnamn: "IGDH Test doktyp 2.pdf", url: "/files/igdh-test.pdf" }] }
+    { id: "UTK-2025-0001", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-19T16:35", kategori: "Avr\xE4kningsnota", amne: "Avr\xE4kningsnota nov", las: true, borttaget: false, arkiverat: true, visasTill: "2036-03-20", innehall: "Din fondorder \xE4r genomf\xF6rd enligt bifogad avr\xE4kningsnota.", bilagor: [{ filnamn: "Avr\xE4kningsnota nov.pdf", url: "/files/avrakningsnota-nov.pdf" }] },
+    { id: "UTK-2025-0002", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-10T15:40", kategori: "Kontoutdrag", amne: "Kontoutdrag okt", las: true, borttaget: false, arkiverat: false, visasTill: "2036-03-20", innehall: "Ditt kontoutdrag f\xF6r oktober 2025 finns tillg\xE4ngligt.", bilagor: [{ filnamn: "Kontoutdrag okt.pdf", url: "/files/kontoutdrag-okt.pdf" }] },
+    { id: "UTK-2025-0003", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-04T11:22", kategori: "Avr\xE4kningsnota", amne: "Avr\xE4kningsnota okt", las: false, borttaget: false, arkiverat: false, visasTill: "2036-03-20", innehall: "Din fondorder \xE4r genomf\xF6rd enligt bifogad avr\xE4kningsnota.", bilagor: [{ filnamn: "Avr\xE4kningsnota okt.pdf", url: "/files/avrakningsnota-okt.pdf" }] },
+    { id: "UTK-2025-0004", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-11-03T12:44", kategori: "Bokf\xF6ringsavi", amne: "Bokf\xF6ringsavi nov", las: false, borttaget: false, arkiverat: false, visasTill: "2036-03-20", innehall: "Bokf\xF6ringsavi f\xF6r november bifogad.", bilagor: [{ filnamn: "Bokf\xF6ringsavi nov.pdf", url: "/files/bokforingsavi-nov.pdf" }] },
+    { id: "UTK-2025-0005", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", avsandare: "Handelsbanken", mottagare: "Kund #71042", datum: "2025-08-18T10:56", kategori: "Avtal", amne: "IGDH Test doktyp 2", las: true, borttaget: false, arkiverat: true, visasTill: "2036-03-20", innehall: "Avtalsbekr\xE4ftelse bifogad.", bilagor: [{ filnamn: "IGDH Test doktyp 2.pdf", url: "/files/igdh-test.pdf" }] }
   ];
   var DOKUMENT = [
-    { dokumentnamn: "Avtal Allkonto", forbindelse: "", dokumentdatum: "2025-08-13", utskicksdatum: "2025-08-13", skickatsTill: "Digitalt", visasTill: "2027-02-13", last: true, borttaget: false, arkiverat: false, kundnr: "KD-71042" },
-    { dokumentnamn: "Kontoutdrag sep", forbindelse: "SE-001", dokumentdatum: "2025-09-30", utskicksdatum: "2025-10-01", skickatsTill: "Digitalt", visasTill: "2027-10-01", last: true, borttaget: false, arkiverat: true, kundnr: "KD-71042" }
+    { dokumentnamn: "Avtal Allkonto", forbindelse: "", dokumentdatum: "2025-08-13", utskicksdatum: "2025-08-13", skickatsTill: "Digitalt", visasTill: "2027-02-13", last: true, borttaget: false, arkiverat: false, kundnr: "KASSAD-71042" },
+    { dokumentnamn: "Kontoutdrag sep", forbindelse: "SE-001", dokumentdatum: "2025-09-30", utskicksdatum: "2025-10-01", skickatsTill: "Digitalt", visasTill: "2027-10-01", last: true, borttaget: false, arkiverat: true, kundnr: "KASSAD-71042" }
   ];
   var KUVERT = [
-    { kuvertId: "ENV-2024-88441", kundnr: "KD-71042", kundnamn: "Kund #71042", datum: "2024-02-29", mall: "Kontoutdrag", kanal: "Digital brevl\xE5da", status: "Levererat" }
+    { kuvertId: "ENV-2024-88441", kundnr: "KASSAD-71042", kundnamn: "Kund #71042", datum: "2024-02-29", mall: "Kontoutdrag", kanal: "Digital brevl\xE5da", status: "Levererat" }
   ];
   var UTSKICK_INSTALLNINGAR = [
-    { kundnr: "KD-71042", kategori: "Kontoutdrag", avser: "Konto", forbindelse: "SE-001-001", papper: false, internet: false },
-    { kundnr: "KD-71042", kategori: "Bokf\xF6ringsavi", avser: "Konto", forbindelse: "SE-011-011", papper: true, internet: false },
-    { kundnr: "KD-71042", kategori: "L\xE5neavi", avser: "L\xE5n", forbindelse: "0", papper: false, internet: false },
-    { kundnr: "KD-71042", kategori: "Avr\xE4kningsnota", avser: "V\xE4rdepapper", forbindelse: "0", papper: true, internet: false },
-    { kundnr: "KD-71042", kategori: "Avtal", avser: "L\xE5n Stadshypotek", forbindelse: "SE-005-05", papper: true, internet: false }
+    { kundnr: "KASSAD-71042", kategori: "Kontoutdrag", avser: "Konto", forbindelse: "SE-001-001", papper: false, internet: false },
+    { kundnr: "KASSAD-71042", kategori: "Bokf\xF6ringsavi", avser: "Konto", forbindelse: "SE-011-011", papper: true, internet: false },
+    { kundnr: "KASSAD-71042", kategori: "L\xE5neavi", avser: "L\xE5n", forbindelse: "0", papper: false, internet: false },
+    { kundnr: "KASSAD-71042", kategori: "Avr\xE4kningsnota", avser: "V\xE4rdepapper", forbindelse: "0", papper: true, internet: false },
+    { kundnr: "KASSAD-71042", kategori: "Avtal", avser: "L\xE5n Stadshypotek", forbindelse: "SE-005-05", papper: true, internet: false }
   ];
   var INFORMATIONSSAMBAND = [
-    { id: "SAM-001", systembeteckning: "EPOX", informationsId: "Q294902", publiceraAutomatiskt: false }
+    { id: "SAM-001", systembeteckning: "EPATRAKTOR", informationsId: "Q294902", publiceraAutomatiskt: false }
   ];
   var PUBLICERING_JOBB = [
-    { jobbId: "EPOX-JOB-001", systembeteckning: "EPOX", informationsId: "Q294902", leveranstidpunkt: "2026-06-01T08:00", status: "V\xE4ntar" },
-    { jobbId: "REVL-JOB-002", systembeteckning: "REVL", informationsId: "Q295100", leveranstidpunkt: "2026-06-02T08:00", status: "V\xE4ntar" }
+    { jobbId: "EPATRAKTOR-JOB-001", systembeteckning: "EPATRAKTOR", informationsId: "Q294902", leveranstidpunkt: "2026-06-01T08:00", status: "V\xE4ntar" },
+    { jobbId: "REVELATION-JOB-002", systembeteckning: "REVELATION", informationsId: "Q295100", leveranstidpunkt: "2026-06-02T08:00", status: "V\xE4ntar" }
   ];
   var INFORMATIONSPRODUKTER = [
     { id: "125", namn: "Konto, Account", land: "Sverige", status: "Aktiv" },
@@ -256,11 +256,11 @@
     { id: "128", namn: "Bol\xE5n", land: "Sverige", status: "Aktiv" }
   ];
   var DEBITERINGSUPPGIFTER = [
-    { produktid: "DEB-001", meddelandeid: "-", systembeteckning: "INL\xC5", antsKodInternet: "217805", antsKodEjInternet: "217905", resultatstalle: "68821", status: "Aktiv" },
-    { produktid: "DEB-002", meddelandeid: "-", systembeteckning: "INL\xC5", antsKodInternet: "217826", antsKodEjInternet: "217926", resultatstalle: "68821", status: "Aktiv" },
-    { produktid: "DEB-003", meddelandeid: "-", systembeteckning: "REVL", antsKodInternet: "217807", antsKodEjInternet: "217907", resultatstalle: "69314", status: "Aktiv" },
-    { produktid: "DEB-004", meddelandeid: "-", systembeteckning: "HBOS", antsKodInternet: "217804", antsKodEjInternet: "217904", resultatstalle: "60180", status: "Under uppl\xE4gg" },
-    { produktid: "DEB-005", meddelandeid: "-", systembeteckning: "AKKO", antsKodInternet: "217800", antsKodEjInternet: "217900", resultatstalle: "60280", status: "Under uppl\xE4gg" }
+    { produktid: "DEPPA-001", meddelandeid: "-", systembeteckning: "L\xC5NA", antsKodInternet: "217805", antsKodEjInternet: "217905", resultatstalle: "68821", status: "Aktiv" },
+    { produktid: "DEPPA-002", meddelandeid: "-", systembeteckning: "L\xC5NA", antsKodInternet: "217826", antsKodEjInternet: "217926", resultatstalle: "68821", status: "Aktiv" },
+    { produktid: "DEPPA-003", meddelandeid: "-", systembeteckning: "REVELATION", antsKodInternet: "217807", antsKodEjInternet: "217907", resultatstalle: "69314", status: "Aktiv" },
+    { produktid: "DEPPA-004", meddelandeid: "-", systembeteckning: "HANDLA", antsKodInternet: "217804", antsKodEjInternet: "217904", resultatstalle: "60180", status: "Under uppl\xE4gg" },
+    { produktid: "DEPPA-005", meddelandeid: "-", systembeteckning: "AKKURAT", antsKodInternet: "217800", antsKodEjInternet: "217900", resultatstalle: "60280", status: "Under uppl\xE4gg" }
   ];
   var MASSUTSKICK = [
     { meddId: "250", land: "Sverige", avsandare: "Handelsbanken", amne: "TBD", utskicksdatum: "2026-06-25", notifieringskategori: "", meddelande: "", status: "Under uppl\xE4gg" },
@@ -403,7 +403,7 @@
             <div class="flex items-end gap-4 flex-wrap">
               <div>
                 <label class="block text-sm text-gray-700 mb-1">Kundnummer <span class="text-red-600">*</span></label>
-                <input id="kundnr" class="${INPUT} w-52" placeholder="KD-XXXXX" />
+                <input id="kundnr" class="${INPUT} w-52" placeholder="KASSAD-XXXXX" />
               </div>
               <button id="btn-hamta" class="${BTN}">H\xE4mta meddelanden</button>
             </div>
@@ -535,7 +535,7 @@
             <div class="flex items-end gap-4 flex-wrap">
               <div>
                 <label class="block text-sm text-gray-700 mb-1">Kundnummer <span class="text-red-600">*</span></label>
-                <input id="kundnr" class="${INPUT2} w-52" placeholder="KD-XXXXX" />
+                <input id="kundnr" class="${INPUT2} w-52" placeholder="KASSAD-XXXXX" />
               </div>
               <button id="btn-hamta" class="${BTN2}">H\xE4mta utskick</button>
             </div>
@@ -663,7 +663,7 @@
             <div class="flex items-end gap-4 flex-wrap">
               <div>
                 <label class="block text-sm text-gray-700 mb-1">Kundnummer</label>
-                <input id="kundnr" class="${INPUT3} w-52" placeholder="KD-XXXXX" />
+                <input id="kundnr" class="${INPUT3} w-52" placeholder="KASSAD-XXXXX" />
               </div>
               <button id="btn-sok-kund" class="${BTN3}">S\xF6k kund</button>
             </div>
@@ -925,7 +925,7 @@
             <div class="flex items-end gap-4 flex-wrap">
               <div>
                 <label class="block text-sm text-gray-700 mb-1">Kundnummer</label>
-                <input id="kundnr" class="${INPUT5} w-52" placeholder="KD-XXXXX" />
+                <input id="kundnr" class="${INPUT5} w-52" placeholder="KASSAD-XXXXX" />
               </div>
               <button id="btn-hamta" class="${BTN5}">H\xE4mta</button>
             </div>
@@ -1177,7 +1177,7 @@
             <div class="flex items-end gap-4 flex-wrap">
               <div>
                 <label class="block text-sm text-gray-700 mb-1">Kundnummer</label>
-                <input id="kundnr" class="${INPUT7} w-52" placeholder="KD-XXXXX" />
+                <input id="kundnr" class="${INPUT7} w-52" placeholder="KASSAD-XXXXX" />
               </div>
               <button id="btn-sok-kund" class="${BTN7}">S\xF6k kund</button>
             </div>
