@@ -3,6 +3,18 @@ export function fmtDatum(iso) {
   if (!iso) return '–';
   return iso.replace('T', ' ').substring(0, 16);
 }
+export function statusPill(status) {
+  const s = (status ?? '').toString().trim();
+  if (!s) return '';
+  const key = s.toLowerCase();
+  const tone =
+    key === 'aktiv' || key === 'skickad' || key === 'skickat' || key === 'levererat' || key === 'godkänd' ? 'green'
+    : key === 'under upplägg' || key === 'väntar' || key === 'avvaktar' ? 'amber'
+    : key === 'klarmarkerad' ? 'blue'
+    : key === 'nekad' ? 'red'
+    : 'gray';
+  return `<span class="pill pill-${tone}">${s}</span>`;
+}
 
 // ---- Mock data store ----
 

@@ -34,13 +34,23 @@
         <nav class="bg-white border-b border-gray-200 px-6 py-2 flex items-center gap-0 text-sm relative">
           <!-- Administration -->
           <div class="relative nav-group" data-menu="administration">
-            <button class="py-1 transition-colors nav-btn" data-active-prefix="/administration">
+            <button class="py-1 transition-colors nav-btn inline-flex items-center gap-2" data-active-prefix="/administration">
+              <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
               Administration
             </button>
             <div class="nav-dropdown absolute top-full left-0 mt-0 bg-white border border-gray-300 shadow-md z-50 min-w-[280px] hidden" data-menu="administration">
-              <a href="#/administration/infoprodukter" class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Administrera informationsprodukter</a>
-              <a href="#/administration/debitering"    class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Debiteringsuppgifter</a>
-              <a href="#/administration/massutskick"   class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Massutskick</a>
+              <a href="#/administration/infoprodukter" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
+                <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                Administrera informationsprodukter
+              </a>
+              <a href="#/administration/debitering" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
+                <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                Debiteringsuppgifter
+              </a>
+              <a href="#/administration/massutskick" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
+                <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Massutskick
+              </a>
             </div>
           </div>
         </nav>
@@ -171,6 +181,13 @@
   function fmtDatum(iso) {
     if (!iso) return "\u2013";
     return iso.replace("T", " ").substring(0, 16);
+  }
+  function statusPill(status) {
+    const s = (status ?? "").toString().trim();
+    if (!s) return "";
+    const key = s.toLowerCase();
+    const tone = key === "aktiv" || key === "skickad" || key === "skickat" || key === "levererat" || key === "godk\xE4nd" ? "green" : key === "under uppl\xE4gg" || key === "v\xE4ntar" || key === "avvaktar" ? "amber" : key === "klarmarkerad" ? "blue" : key === "nekad" ? "red" : key === "inaktiv" || key === "vilande" ? "gray" : "gray";
+    return `<span class="pill pill-${tone}">${s}</span>`;
   }
   var KUNDER = {
     "KASSAD-71042": { kundnr: "KASSAD-71042", kundnamn: "Kund #71042", land: "Sverige" },
@@ -1826,7 +1843,7 @@
         <td><button class="link" data-id="${p.id}">${p.id}</button></td>
         <td>${p.namn}</td>
         <td>${p.land}</td>
-        <td style="color:#15803d">${p.status}</td>
+        <td>${statusPill(p.status)}</td>
         <td><button class="clone-btn ${BTN_SMALL}" data-id="${p.id}">Kopiera</button></td>
       `;
         tr.querySelector("button.link").addEventListener("click", () => this.fillForm(p.id));
@@ -2137,7 +2154,7 @@
         <td>${r.antsKodInternet}</td>
         <td>${r.antsKodEjInternet}</td>
         <td>${r.resultatstalle}</td>
-        <td style="color:${r.status === "Aktiv" ? "#15803d" : r.status === "Inaktiv" ? "#6b7280" : "#d97706"}">${r.status ?? ""}</td>
+        <td>${statusPill(r.status)}</td>
       `;
         tr.querySelector("button.link").addEventListener("click", () => {
           this.selectedRow = r;
@@ -2524,14 +2541,13 @@
       this.utskick.forEach((u) => {
         const tr = document.createElement("tr");
         tr.style.cursor = "pointer";
-        const statusColor = u.status === "Under uppl\xE4gg" ? "#d97706" : "#15803d";
         tr.innerHTML = `
         <td style="white-space:nowrap">${u.utskicksdatum || ""}</td>
         <td>${u.avsandare}</td>
         <td>${u.meddId}</td>
         <td>${u.land || ""}</td>
         <td><button class="link">${u.amne}</button></td>
-        <td><span style="color:${statusColor}">${u.status}</span></td>
+        <td>${statusPill(u.status)}</td>
       `;
         tr.addEventListener("click", () => {
           this.querySelectorAll("#utskick-tbody tr").forEach((r) => r.classList.remove("selected"));

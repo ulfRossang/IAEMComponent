@@ -1,4 +1,4 @@
-import { mockGetInformationsprodukter, mockGetInformationsprodukt, mockCreateInformationsprodukt, mockUpdateInformationsprodukt } from '../../api.js';
+import { mockGetInformationsprodukter, mockGetInformationsprodukt, mockCreateInformationsprodukt, mockUpdateInformationsprodukt, statusPill } from '../../api.js';
 
 const BTN    = 'bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0';
 const INPUT  = 'border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#1565c0] w-full bg-white';
@@ -453,7 +453,7 @@ class PageInfoprodukter extends HTMLElement {
         <td><button class="link" data-id="${p.id}">${p.id}</button></td>
         <td>${p.namn}</td>
         <td>${p.land}</td>
-        <td style="color:#15803d">${p.status}</td>
+        <td>${statusPill(p.status)}</td>
         <td><button class="clone-btn ${BTN_SMALL}" data-id="${p.id}">Kopiera</button></td>
       `;
       tr.querySelector('button.link').addEventListener('click', () => this.fillForm(p.id));

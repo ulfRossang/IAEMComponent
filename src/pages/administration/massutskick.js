@@ -1,4 +1,4 @@
-import { fmtDatum, mockGetMassutskick, mockCreateMassutskick, mockUpdateMassutskick, mockDeleteMassutskick, mockKlarmarkeraMassutskick } from '../../api.js';
+import { fmtDatum, mockGetMassutskick, mockCreateMassutskick, mockUpdateMassutskick, mockDeleteMassutskick, mockKlarmarkeraMassutskick, statusPill } from '../../api.js';
 
 const BTN       = 'bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0';
 const BTN_SEC   = 'bg-white border border-gray-400 text-gray-700 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50';
@@ -387,14 +387,13 @@ class PageMassutskick extends HTMLElement {
     this.utskick.forEach(u => {
       const tr = document.createElement('tr');
       tr.style.cursor = 'pointer';
-      const statusColor = u.status === 'Under upplägg' ? '#d97706' : '#15803d';
       tr.innerHTML = `
         <td style="white-space:nowrap">${u.utskicksdatum || ''}</td>
         <td>${u.avsandare}</td>
         <td>${u.meddId}</td>
         <td>${u.land || ''}</td>
         <td><button class="link">${u.amne}</button></td>
-        <td><span style="color:${statusColor}">${u.status}</span></td>
+        <td>${statusPill(u.status)}</td>
       `;
       tr.addEventListener('click', () => {
         this.querySelectorAll('#utskick-tbody tr').forEach(r => r.classList.remove('selected'));

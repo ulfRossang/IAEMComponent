@@ -1,4 +1,4 @@
-import { mockGetDebiteringsuppgifter, mockCreateDebiteringsuppgift, mockUpdateDebiteringsuppgift, mockDeleteDebiteringsuppgift } from '../../api.js';
+import { mockGetDebiteringsuppgifter, mockCreateDebiteringsuppgift, mockUpdateDebiteringsuppgift, mockDeleteDebiteringsuppgift, statusPill } from '../../api.js';
 
 const BTN = 'bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0';
 const BTN_SEC = 'bg-white border border-gray-400 text-gray-700 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50';
@@ -191,7 +191,7 @@ class PageDebitering extends HTMLElement {
         <td>${r.antsKodInternet}</td>
         <td>${r.antsKodEjInternet}</td>
         <td>${r.resultatstalle}</td>
-        <td style="color:${r.status === 'Aktiv' ? '#15803d' : r.status === 'Inaktiv' ? '#6b7280' : '#d97706'}">${r.status ?? ''}</td>
+        <td>${statusPill(r.status)}</td>
       `;
       tr.querySelector('button.link').addEventListener('click', () => {
         this.selectedRow = r;

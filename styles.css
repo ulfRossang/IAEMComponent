@@ -1,66 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-body {
-  background: #eef2f7;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  color: #1a1a2e;
+/* ============================================================
+   IAEM Kontakten — Modern Handelsbanken-tema
+   Uppfräschad CSS ovanpå befintlig Tailwind-markup.
+   ============================================================ */
+
+:root {
+  --hb-blue:        #1565c0;
+  --hb-blue-dark:   #0d52a8;
+  --hb-blue-deep:   #0a3d8f;
+  --hb-link:        #0066b3;
+  --hb-bg:          #eef2f7;
+  --hb-border:      #e3e8ef;
+  --hb-ink:         #1f2a44;
+  --hb-muted:       #5b6b86;
+  --hb-radius:      12px;
+  --hb-shadow:      0 1px 2px rgba(16, 24, 40, .04), 0 4px 16px rgba(16, 24, 40, .06);
+  --hb-shadow-hover:0 2px 4px rgba(16, 24, 40, .06), 0 12px 28px rgba(16, 24, 40, .10);
 }
 
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  background:
+    radial-gradient(1100px 420px at 100% -10%, rgba(21, 101, 192, .07), transparent 60%),
+    var(--hb-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 14px;
+  color: var(--hb-ink);
+  letter-spacing: -0.006em;
+}
+
+::selection { background: rgba(21, 101, 192, .18); }
+
 h1 {
-  color: #1565c0;
+  color: var(--hb-blue);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
   margin-bottom: 1rem;
 }
 
+/* ---------- Header ---------- */
+app-shell header {
+  background: linear-gradient(135deg, #1e6fd0 0%, var(--hb-blue-dark) 55%, var(--hb-blue-deep) 100%) !important;
+  box-shadow: 0 2px 12px rgba(13, 71, 161, .22);
+  position: relative;
+}
+app-shell header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff9800, #ffb74d 50%, transparent);
+  opacity: .9;
+}
+app-shell header button,
+app-shell header .border {
+  backdrop-filter: saturate(1.2);
+  transition: background .15s ease, color .15s ease;
+}
+
+/* ---------- Nav ---------- */
+app-shell nav {
+  box-shadow: 0 1px 0 rgba(16, 24, 40, .05), 0 6px 18px -14px rgba(16, 24, 40, .25);
+}
+app-shell .nav-btn {
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 14px !important;
+  transition: background .14s ease, color .14s ease;
+}
+app-shell .nav-btn:hover {
+  background: rgba(21, 101, 192, .08);
+}
+app-shell .nav-dropdown {
+  border: 1px solid var(--hb-border) !important;
+  border-radius: 10px !important;
+  box-shadow: var(--hb-shadow-hover) !important;
+  padding: 6px !important;
+  overflow: hidden;
+}
+app-shell .nav-dropdown a {
+  border-radius: 7px;
+  transition: background .12s ease, color .12s ease;
+}
+/* Ikoner i navigeringen */
+.nav-ico {
+  flex-shrink: 0;
+}
+app-shell .nav-dropdown a .nav-ico {
+  color: #8a97ab;
+  transition: color .12s ease;
+}
+app-shell .nav-dropdown a:hover .nav-ico,
+app-shell .nav-dropdown a.font-semibold .nav-ico {
+  color: var(--hb-blue);
+}
+
+/* ---------- Paneler ---------- */
+app-shell hb-panel > div,
+app-shell hb-info-panel > div {
+  border: 1px solid var(--hb-border) !important;
+  border-radius: var(--hb-radius) !important;
+  box-shadow: var(--hb-shadow) !important;
+  transition: box-shadow .2s ease;
+}
+app-shell hb-panel > div:hover {
+  box-shadow: var(--hb-shadow-hover) !important;
+}
+hb-panel h2, hb-info-panel h2 {
+  letter-spacing: -0.01em;
+}
+/* Finare avdelare under panelrubriken */
+hb-panel > div > div:first-child > div,
+hb-info-panel > div > div:first-child > div {
+  border-color: var(--hb-border) !important;
+}
+
+/* ---------- Tabeller ---------- */
 .hb-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
 }
-
-.hb-table thead tr {
-  border-bottom: 2px solid #d1d5db;
-}
-
 .hb-table thead th {
   text-align: left;
-  padding: 10px 12px;
-  font-weight: 700;
-  color: #111827;
+  padding: 11px 14px;
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--hb-muted);
+  background: #f7f9fc;
+  border-bottom: 1px solid var(--hb-border);
   white-space: nowrap;
 }
-
-.hb-table tbody tr {
-  border-bottom: 1px solid #e5e7eb;
-  transition: background 0.1s;
-}
-
-.hb-table tbody tr:hover {
-  background: #f3f4f6;
-}
-
-.hb-table tbody tr.selected td {
-  background: #eff6ff;
-}
-
+.hb-table thead th:first-child { border-top-left-radius: 9px; }
+.hb-table thead th:last-child  { border-top-right-radius: 9px; }
 .hb-table tbody td {
-  padding: 10px 12px;
-  color: #374151;
+  padding: 11px 14px;
+  color: #37425a;
+  border-bottom: 1px solid #eef1f6;
 }
+.hb-table tbody tr {
+  transition: background .12s ease;
+}
+.hb-table tbody tr:nth-child(even) td { background: #fafbfd; }
+.hb-table tbody tr:hover td          { background: #eef5ff; }
+.hb-table tbody tr.selected td {
+  background: #e6f0fe;
+  box-shadow: inset 3px 0 0 var(--hb-blue);
+}
+.hb-table tbody tr:last-child td { border-bottom: none; }
 
+/* ---------- Status-pills ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.7;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pill-green { color: #15803d; background: #e9f7ef; border-color: #bfe8cf; }
+.pill-amber { color: #b45309; background: #fdf3e5; border-color: #f6ddb0; }
+.pill-blue  { color: #1565c0; background: #e8f1fd; border-color: #c3dcf7; }
+.pill-gray  { color: #5b6b86; background: #eef1f6; border-color: #dde3ec; }
+.pill-red   { color: #b91c1c; background: #fdeaea; border-color: #f6c9c9; }
+
+/* ---------- Knappar & länkar ---------- */
 button.link {
-  color: #0066b3;
+  color: var(--hb-link);
   background: none;
   border: none;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
+  transition: color .12s ease;
 }
-
 button.link:hover {
+  color: var(--hb-blue-deep);
   text-decoration: underline;
 }
+
+/* ---------- Formulärkontroller ---------- */
+input[type="text"], input[type="search"], input[type="date"],
+input[type="number"], input[type="email"], select, textarea {
+  border-radius: 8px !important;
+  border-color: #d5dbe6 !important;
+  transition: border-color .15s ease, box-shadow .15s ease;
+  outline: none;
+}
+input[type="text"]:focus, input[type="search"]:focus, input[type="date"]:focus,
+input[type="number"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+  border-color: var(--hb-blue) !important;
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, .15) !important;
+}
+
+/* ---------- Footer ---------- */
+app-shell footer {
+  background: linear-gradient(90deg, var(--hb-blue-dark), var(--hb-blue-deep)) !important;
+}
+
+/* ---------- Scrollbar (WebKit) ---------- */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-thumb {
+  background: #c3cddc;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: #a9b6c9; background-clip: content-box; }
 
 .hidden {
   display: none !important;
