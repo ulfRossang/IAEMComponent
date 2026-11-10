@@ -28,46 +28,55 @@ class PageInfoprodukter extends HTMLElement {
               </div>
               <div class="px-4 pb-4 pt-3 space-y-3">
 
-                <!-- Rad 1: Land -->
-                <div class="flex items-center gap-3">
-                  <label class="text-sm text-gray-700 w-28 shrink-0">Land ${REQ}</label>
-                  <select id="f-land" class="${SELECT}" style="max-width:120px">
-                    <option value="">Välj land</option>
-                    <option>SE</option><option>NO</option><option>DK</option>
-                    <option>FI</option><option>GB</option><option>NL</option>
-                  </select>
-                </div>
+                <!-- Grupp: Land och namn -->
+                <div class="border border-gray-200 rounded-lg bg-[#f7f9fc] p-4 space-y-3">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Land och namn</p>
 
-                <!-- Rad 2: Namn med namnlista -->
-                <div class="flex items-start gap-3">
-                  <label class="text-sm text-gray-700 w-28 shrink-0 pt-1.5">Namn ${REQ}</label>
-                  <div class="flex-1 space-y-2">
-                    <div class="flex gap-2">
-                      <input id="f-namn" class="${INPUT}" placeholder="Ange namn" maxlength="20" style="max-width:200px" />
-                      <select id="f-sprak" class="${SELECT}" style="max-width:80px">
-                        <option value="">Språk</option>
-                        <option value="sv">sv</option>
-                        <option value="no">no</option>
-                        <option value="dk">dk</option>
-                        <option value="fi">fi</option>
-                        <option value="en">en</option>
-                        <option value="nl">nl</option>
-                      </select>
+                  <!-- Rad 1: Land -->
+                  <div class="flex items-center gap-3">
+                    <label class="text-sm text-gray-700 w-28 shrink-0">Land ${REQ}</label>
+                    <select id="f-land" class="${SELECT}" style="max-width:120px">
+                      <option value="">Välj land</option>
+                      <option>SE</option><option>NO</option><option>DK</option>
+                      <option>FI</option><option>GB</option><option>NL</option>
+                    </select>
+                  </div>
+
+                  <!-- Rad 2: Namn med namnlista -->
+                  <div class="flex items-start gap-3">
+                    <label class="text-sm text-gray-700 w-28 shrink-0 pt-1.5">Namn ${REQ}</label>
+                    <div class="flex-1 space-y-2">
+                      <div class="flex gap-2">
+                        <input id="f-namn" class="${INPUT}" placeholder="Ange namn" maxlength="20" style="max-width:200px" />
+                        <select id="f-sprak" class="${SELECT}" style="max-width:80px">
+                          <option value="">Språk</option>
+                          <option value="sv">sv</option>
+                          <option value="no">no</option>
+                          <option value="dk">dk</option>
+                          <option value="fi">fi</option>
+                          <option value="en">en</option>
+                          <option value="nl">nl</option>
+                        </select>
+                      </div>
+                      <button type="button" id="btn-add-namn" class="${BTN_SMALL}">Lägg till</button>
+                      <table id="namn-table" class="hidden text-sm border-collapse mt-1" style="width:auto">
+                        <thead>
+                          <tr class="text-left text-gray-500 border-b border-gray-200">
+                            <th class="font-normal pb-1" style="width:160px">Namn</th>
+                            <th class="font-normal pb-1 px-3" style="width:36px">Språk</th>
+                            <th class="font-normal pb-1 px-3" style="width:36px">Land</th>
+                            <th style="width:16px"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="namn-tbody"></tbody>
+                      </table>
                     </div>
-                    <button type="button" id="btn-add-namn" class="${BTN_SMALL}">Lägg till</button>
-                    <table id="namn-table" class="hidden text-sm border-collapse mt-1" style="width:auto">
-                      <thead>
-                        <tr class="text-left text-gray-500 border-b border-gray-200">
-                          <th class="font-normal pb-1" style="width:160px">Namn</th>
-                          <th class="font-normal pb-1 px-3" style="width:36px">Språk</th>
-                          <th class="font-normal pb-1 px-3" style="width:36px">Land</th>
-                          <th style="width:16px"></th>
-                        </tr>
-                      </thead>
-                      <tbody id="namn-tbody"></tbody>
-                    </table>
                   </div>
                 </div>
+
+                <!-- Grupp: Produktuppgifter -->
+                <div class="border border-gray-200 rounded-lg bg-[#f7f9fc] p-4 space-y-3">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Produktuppgifter</p>
 
                 <!-- Rad 3: Id | Notifieringskategori | Systembeteckning -->
                 <div class="grid grid-cols-3 gap-4">
@@ -145,6 +154,7 @@ class PageInfoprodukter extends HTMLElement {
                     <textarea id="f-beskrivning" class="${INPUT}" rows="2" style="resize:vertical"></textarea>
                   </div>
                 </div>
+                </div>
 
                 <!-- Kanaler & format — kompakt -->
                 <div class="border border-gray-200 rounded p-3 space-y-2">
@@ -197,8 +207,9 @@ class PageInfoprodukter extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 8: Meddelande i utskick via Digitalt -->
-                <div>
+                <!-- Grupp: Meddelande -->
+                <div class="border border-gray-200 rounded-lg bg-[#f7f9fc] p-4 space-y-3">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Meddelande</p>
                   <label class="${LABEL}">Meddelande i utskick via Digitalt ${REQ}</label>
                   <div style="border:1px solid #1565c0;position:relative">
                     <div style="display:flex;align-items:center;gap:0;padding:3px 8px;border-bottom:1px solid #1565c0;background:#fff;user-select:none">

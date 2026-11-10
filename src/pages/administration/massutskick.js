@@ -96,9 +96,9 @@ class PageMassutskick extends HTMLElement {
                   </div>
                 </div>
 
-                <!-- Row 6: Meddelande -->
-                <div>
-                  <label class="${LABEL}">Meddelande ${REQ}</label>
+                <!-- Grupp: Meddelande -->
+                <div class="border border-gray-200 rounded-lg bg-[#f7f9fc] p-4 space-y-3">
+                  <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Meddelande ${REQ}</p>
                   <div style="border:1px solid #1565c0;position:relative">
                     <div style="display:flex;align-items:center;gap:0;padding:3px 8px;border-bottom:1px solid #1565c0;background:#fff;user-select:none">
                       <button type="button" id="mas-r"   title="Rensa formatering"       style="background:none;border:none;cursor:pointer;padding:2px 6px;color:#1a3a6b;font:bold 14px serif">R</button>
