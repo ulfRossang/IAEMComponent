@@ -32,22 +32,6 @@
 
         <!-- Nav -->
         <nav class="bg-white border-b border-gray-200 px-6 py-2 flex items-center gap-0 text-sm relative">
-          <!-- Kundvy -->
-          <div class="relative nav-group" data-menu="kundvy">
-            <button class="py-1 transition-colors nav-btn" data-active-prefix="/kundvy">
-              Kundvy
-            </button>
-            <div class="nav-dropdown absolute top-full left-0 mt-0 bg-white border border-gray-300 shadow-md z-50 min-w-[240px] hidden" data-menu="kundvy">
-              <a href="#/kundvy/meddelanden"          class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Visa meddelanden</a>
-              <a href="#/kundvy/utskick"              class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Visa utskick</a>
-              <a href="#/kundvy/sok-dokument"         class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">S\xF6k dokument</a>
-              <a href="#/kundvy/sok-kuvert"           class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">S\xF6k med kuvertID</a>
-              <a href="#/kundvy/administrera-utskick" class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Administrera utskick</a>
-            </div>
-          </div>
-
-          <span class="text-gray-300 mx-3">|</span>
-
           <!-- Administration -->
           <div class="relative nav-group" data-menu="administration">
             <button class="py-1 transition-colors nav-btn" data-active-prefix="/administration">
@@ -57,20 +41,6 @@
               <a href="#/administration/infoprodukter" class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Administrera informationsprodukter</a>
               <a href="#/administration/debitering"    class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Debiteringsuppgifter</a>
               <a href="#/administration/massutskick"   class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Massutskick</a>
-            </div>
-          </div>
-
-          <span class="text-gray-300 mx-3">|</span>
-
-          <!-- Publicering -->
-          <div class="relative nav-group" data-menu="publicering">
-            <button class="py-1 transition-colors nav-btn" data-active-prefix="/publicering">
-              Publicering
-            </button>
-            <div class="nav-dropdown absolute top-full left-0 mt-0 bg-white border border-gray-300 shadow-md z-50 min-w-[240px] hidden" data-menu="publicering">
-              <a href="#/publicering/installningar" class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Publiceringsinst\xE4llningar</a>
-              <a href="#/publicering/kontrollera"   class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Kontrollera dokument</a>
-              <a href="#/publicering/godkann"       class="block px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">Godk\xE4nna f\xF6r publicering</a>
             </div>
           </div>
         </nav>
@@ -123,7 +93,7 @@
       });
     }
     updateActiveNav() {
-      const hash = window.location.hash || "#/kundvy/meddelanden";
+      const hash = window.location.hash || "#/administration/infoprodukter";
       const path = hash.replace("#", "");
       this.querySelectorAll(".nav-btn").forEach((btn) => {
         const prefix = btn.getAttribute("data-active-prefix") ?? "";
@@ -147,23 +117,15 @@
       });
     }
     renderRoute() {
-      const hash = window.location.hash || "#/kundvy/meddelanden";
+      const hash = window.location.hash || "#/administration/infoprodukter";
       const content = this.querySelector("#app-content");
       if (!content) return;
       const routeMap = {
-        "#/kundvy/meddelanden": "<page-meddelanden></page-meddelanden>",
-        "#/kundvy/utskick": "<page-utskick></page-utskick>",
-        "#/kundvy/sok-dokument": "<page-sok-dokument></page-sok-dokument>",
-        "#/kundvy/sok-kuvert": "<page-sok-kuvert></page-sok-kuvert>",
-        "#/kundvy/administrera-utskick": "<page-administrera-utskick></page-administrera-utskick>",
-        "#/publicering/installningar": "<page-installningar></page-installningar>",
-        "#/publicering/kontrollera": "<page-kontrollera></page-kontrollera>",
-        "#/publicering/godkann": "<page-godkann></page-godkann>",
         "#/administration/infoprodukter": "<page-infoprodukter></page-infoprodukter>",
         "#/administration/debitering": "<page-debitering></page-debitering>",
         "#/administration/massutskick": "<page-massutskick></page-massutskick>"
       };
-      content.innerHTML = routeMap[hash] ?? routeMap["#/kundvy/meddelanden"];
+      content.innerHTML = routeMap[hash] ?? routeMap["#/administration/infoprodukter"];
     }
   };
   customElements.define("app-shell", AppShell);
