@@ -1535,12 +1535,22 @@
                 <!-- Rad 5: DocType | DocSubtype | Beskrivning -->
                 <div class="grid grid-cols-3 gap-4 items-start">
                   <div>
-                    <label class="${LABEL}">DokumentTyp</label>
-                    <input id="f-doctype" class="${INPUT8}" type="text" />
+                    <label class="${LABEL}">Kategori</label>
+                    <select id="f-doctype" class="${SELECT2}">
+                      <option value="">V\xE4lj kategori</option>
+                      <option>\xC5rsbesked (DT001)</option>
+                      <option>Periodiska redovisningar (DT002)</option>
+                      <option>Avr\xE4kningsnotor (DT003)</option>
+                    </select>
                   </div>
                   <div>
-                    <label class="${LABEL}">DokumentSubtyp</label>
-                    <input id="f-docsubtype" class="${INPUT8}" type="text" />
+                    <label class="${LABEL}">Underkategori</label>
+                    <select id="f-docsubtype" class="${SELECT2}">
+                      <option value="">V\xE4lj underkategori</option>
+                      <option>Konton och l\xE5n (DS001)</option>
+                      <option>Dep\xE5 (DS002)</option>
+                      <option>Fond (DS003)</option>
+                    </select>
                   </div>
                   <div>
                     <label class="${LABEL}">Beskrivning</label>
