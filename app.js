@@ -2628,9 +2628,9 @@
     }
     addAntskodKolumn() {
       const ths = Array.from(this.querySelectorAll("thead th"));
-      if (ths.some((th) => th.textContent.trim() === "Antskod")) return;
+      if (ths.some((th) => th.textContent.trim() === "Akod")) return;
       const statusTh = ths.find((th) => th.textContent.trim() === "Status");
-      if (statusTh) statusTh.insertAdjacentHTML("beforebegin", "<th>Antskod</th>");
+      if (statusTh) statusTh.insertAdjacentHTML("beforebegin", "<th>Akod</th>");
     }
     renderUtskick() {
       const tbody = this.querySelector("#utskick-tbody");
@@ -2672,7 +2672,7 @@
           <input id="f-amne" class="${INPUT}" />
         </div>
         <div>
-          <label class="${LABEL}">Antskod</label>
+          <label class="${LABEL}">Akod</label>
           <input id="f-antskod" class="${INPUT}" />
         </div>
       `;
@@ -2697,9 +2697,9 @@
       box.innerHTML = `
         <div class="flex items-center justify-between gap-3 flex-wrap">
           <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Dokument</p>
-          <button type="button" id="btn-ladda-upp-excel" class="bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0">Ladda in REF-nummer</button>
+          <button type="button" id="btn-ladda-upp-excel" class="bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0">Ladda in R-nummer</button>
         </div>
-        <p class="text-xs text-gray-500">Ladda upp ett Excel-ark med refnummer.</p>
+        <p class="text-xs text-gray-500">Ladda upp ett Excel-ark med R-nummer.</p>
         <div id="excel-filer" class="space-y-1"></div>
       `;
       anchor.insertAdjacentElement("afterend", box);
