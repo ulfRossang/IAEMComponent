@@ -2608,8 +2608,75 @@
       const h1 = this.querySelector("h1");
       if (h1) h1.textContent = "Administrera massutskick ny";
       this.querySelector("#btn-bilagor")?.remove();
+      this.addAntskodFalt();
+      this.addAntskodKolumn();
       this.addDokumentSektion();
       this.buildExcelDialog();
+    }
+    getFormBody() {
+      return { ...super.getFormBody(), antskod: this.querySelector("#f-antskod")?.value.trim() || "" };
+    }
+    fillForm(u) {
+      super.fillForm(u);
+      const a = this.querySelector("#f-antskod");
+      if (a) a.value = u.antskod || "";
+    }
+    clearForm() {
+      super.clearForm();
+      const a = this.querySelector("#f-antskod");
+      if (a) a.value = "";
+    }
+    addAntskodKolumn() {
+      const ths = Array.from(this.querySelectorAll("thead th"));
+      if (ths.some((th) => th.textContent.trim() === "Antskod")) return;
+      const statusTh = ths.find((th) => th.textContent.trim() === "Status");
+      if (statusTh) statusTh.insertAdjacentHTML("beforebegin", "<th>Antskod</th>");
+    }
+    renderUtskick() {
+      const tbody = this.querySelector("#utskick-tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      this.utskick.forEach((u) => {
+        const tr = document.createElement("tr");
+        tr.style.cursor = "pointer";
+        tr.innerHTML = `
+        <td style="white-space:nowrap">${u.utskicksdatum || ""}</td>
+        <td>${u.avsandare}</td>
+        <td>${u.meddId}</td>
+        <td>${u.land || ""}</td>
+        <td><button class="link">${u.amne}</button></td>
+        <td>${u.antskod || ""}</td>
+        <td>${statusPill(u.status)}</td>
+      `;
+        tr.addEventListener("click", () => {
+          this.querySelectorAll("#utskick-tbody tr").forEach((r) => r.classList.remove("selected"));
+          tr.classList.add("selected");
+          this.selected = u;
+          this.fillForm(u);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+    addAntskodFalt() {
+      const amne = this.querySelector("#f-amne");
+      const row = amne?.closest("div");
+      if (!row) return;
+      const LABEL = "block text-sm text-gray-700 mb-1";
+      const INPUT = "border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#1565c0] w-full bg-white";
+      const REQ = '<span class="text-red-600">*</span>';
+      const amneValue = amne.value;
+      row.className = "grid grid-cols-2 gap-6";
+      row.innerHTML = `
+        <div>
+          <label class="${LABEL}">Ämne ${REQ}</label>
+          <input id="f-amne" class="${INPUT}" />
+        </div>
+        <div>
+          <label class="${LABEL}">Antskod</label>
+          <input id="f-antskod" class="${INPUT}" />
+        </div>
+      `;
+      this.querySelector("#f-amne").value = amneValue;
     }
     bilagaSidor() {
       return [
