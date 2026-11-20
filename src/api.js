@@ -216,3 +216,21 @@ export function mockKlarmarkeraMassutskick(meddId) {
   m.status = 'Klarmarkerad';
   return 'OK';
 }
+
+// ---- Uppladdade Excel-ark (simulerad backend-lagring) ----
+const UPPLADDADE_EXCELFILER = [];
+export function mockUploadExcelFil(fil) {
+  const record = {
+    id: UPPLADDADE_EXCELFILER.length + 1,
+    filnamn: fil.filnamn,
+    storlek: fil.storlek,
+    typ: fil.typ ?? '',
+    uppladdad: new Date().toISOString(),
+    dataUrl: fil.dataUrl ?? '',
+  };
+  UPPLADDADE_EXCELFILER.push(record);
+  return record;
+}
+export function mockGetUppladdadeExcelfiler() {
+  return [...UPPLADDADE_EXCELFILER];
+}

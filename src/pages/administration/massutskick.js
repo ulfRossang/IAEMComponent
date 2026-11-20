@@ -20,7 +20,7 @@ const NOTIF_KATEGORIER = [
   'NOT-05 Avtal',
 ];
 
-class PageMassutskick extends HTMLElement {
+export class PageMassutskick extends HTMLElement {
   constructor() {
     super();
     this.utskick = [];
