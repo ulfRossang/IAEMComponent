@@ -9,8 +9,21 @@ class PageMassutskickNy extends PageMassutskick {
     super.connectedCallback();
     const h1 = this.querySelector('h1');
     if (h1) h1.textContent = 'Administrera massutskick ny';
+    this.querySelector('#btn-bilagor')?.remove();
     this.addDokumentSektion();
     this.buildExcelDialog();
+  }
+
+  bilagaSidor() {
+    return [
+      '2025-03-24 – Account terms and conditions for Handelsbanken Black',
+      '2026-11-11 – Account terms and conditions for Handelsbanken Platinum',
+      '2025-03-24 – Account terms and conditions for Handelsbanken Platinum',
+      '2026-06-10 – Agreement – Trading in financial instruments and currencies',
+      '2021-02-23 – Alliant',
+      '2026-02-11 – Allmänna villkor för Depå',
+      '2026-09-11 – Allmänna villkor för Depå',
+    ];
   }
 
   addDokumentSektion() {
@@ -19,7 +32,7 @@ class PageMassutskickNy extends PageMassutskick {
     const box = document.createElement('div');
     box.className = 'border border-gray-200 rounded-lg bg-[#f7f9fc] p-4 space-y-3';
     box.innerHTML = `
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Dokument</p>
         <button type="button" id="btn-ladda-upp-excel" class="bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0">Ladda in REF-nummer</button>
       </div>
@@ -28,7 +41,42 @@ class PageMassutskickNy extends PageMassutskick {
     `;
     anchor.insertAdjacentElement('afterend', box);
     box.querySelector('#btn-ladda-upp-excel').addEventListener('click', () => this.openExcelDialog());
+
+    const bilagaRad = document.createElement('div');
+    bilagaRad.className = 'pt-1 space-y-2';
+    bilagaRad.innerHTML = `
+      <div class="flex items-center gap-2 flex-wrap">
+        <label class="text-sm text-gray-700 whitespace-nowrap">Infoga en bilaga</label>
+        <select id="f-infoga-bilaga" class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#1565c0] bg-white" style="min-width:240px;max-width:360px">
+          <option value="">Välj bilaga</option>
+          ${this.bilagaSidor().map((s) => `<option>${s}</option>`).join('')}
+        </select>
+      </div>
+      <div id="bilaga-lankar-list" class="space-y-1"></div>
+    `;
+    box.insertAdjacentElement('afterend', bilagaRad);
+    const sel = bilagaRad.querySelector('#f-infoga-bilaga');
+    sel.addEventListener('change', () => {
+      if (!sel.value) return;
+      this.addBilagaSida(sel.value);
+      sel.value = '';
+    });
+
     this.renderExcelFiler();
+  }
+
+  addBilagaSida(namn) {
+    const list = this.querySelector('#bilaga-lankar-list');
+    if (!list) return;
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-2 px-3 py-1.5 bg-gray-50 border border-gray-200 rounded text-sm text-gray-700';
+    row.innerHTML = `
+      <span class="text-gray-400">📎</span>
+      <span class="flex-1">${namn}</span>
+      <button type="button" class="text-gray-400 hover:text-red-500 text-xs leading-none" title="Ta bort">✕</button>
+    `;
+    row.querySelector('button').addEventListener('click', () => row.remove());
+    list.appendChild(row);
   }
 
   buildExcelDialog() {
