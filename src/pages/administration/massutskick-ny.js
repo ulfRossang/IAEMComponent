@@ -1,5 +1,5 @@
 import { PageMassutskick } from './massutskick.js';
-import { mockUploadExcelFil, mockGetUppladdadeExcelfiler, statusPill } from '../../api.js';
+import { mockUploadExcelFil, mockGetUppladdadeExcelfiler, statusPill, mockCreateMassutskick, mockUpdateMassutskick } from '../../api.js';
 
 // Kopia av "Administrera massutskick" — egen rubrik, route och extra
 // dokumenthantering: ladda upp ett Excel-ark (med refnummer) från filsystemet
@@ -10,10 +10,126 @@ class PageMassutskickNy extends PageMassutskick {
     const h1 = this.querySelector('h1');
     if (h1) h1.textContent = 'Administrera massutskick ny';
     this.querySelector('#btn-bilagor')?.remove();
+    this.setupSkapaUtkast();
+    this.setupSpara();
     this.addAntskodFalt();
     this.addAntskodKolumn();
     this.addDokumentSektion();
     this.buildExcelDialog();
+    this.buildPreviewDialog();
+    this.addVisaMassutskickKnapp();
+    this.addProdPublKnappar();
+  }
+
+  setupSkapaUtkast() {
+    const old = this.querySelector('#btn-ny');
+    if (!old) return;
+    const btn = old.cloneNode(false);
+    btn.textContent = 'Skapa utkast';
+    old.replaceWith(btn);
+    btn.addEventListener('click', () => this.skapaUtkast());
+  }
+
+  skapaUtkast() {
+    const skapat = mockCreateMassutskick(this.getFormBody());
+    this.selected = skapat;
+    const meddIdInput = this.querySelector('#f-meddid');
+    if (meddIdInput) meddIdInput.value = skapat.meddId;
+    this.loadUtskick();
+    this.showMsg(`✓ Utkast skapat (MEDD-ID ${skapat.meddId})`);
+  }
+
+  setupSpara() {
+    const old = this.querySelector('#btn-spara');
+    if (!old) return;
+    const btn = old.cloneNode(false);
+    btn.textContent = 'Spara';
+    old.replaceWith(btn);
+    btn.addEventListener('mousedown', e => e.preventDefault());
+    btn.addEventListener('click', () => this.sparaAndringar());
+  }
+
+  sparaAndringar() {
+    if (!this.selected) {
+      this.showMsg('Välj ett massutskick i listan att spara');
+      return;
+    }
+    mockUpdateMassutskick(this.selected.meddId, this.getFormBody());
+    this.loadUtskick();
+    this.showMsg('✓ Sparad');
+  }
+
+  addProdPublKnappar() {
+    const group = this.querySelector('#btn-spara')?.parentElement;
+    if (!group || group.querySelector('#btn-prodtest')) return;
+    const prodtest = document.createElement('button');
+    prodtest.type = 'button';
+    prodtest.id = 'btn-prodtest';
+    prodtest.className = 'bg-white border border-gray-400 text-gray-700 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50';
+    prodtest.textContent = 'Verifiering';
+    prodtest.addEventListener('click', () => this.showMsg('✓ Skickad till verifiering'));
+    const publicera = document.createElement('button');
+    publicera.type = 'button';
+    publicera.id = 'btn-publicera';
+    publicera.className = 'bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0';
+    publicera.textContent = 'Publicera';
+    publicera.addEventListener('click', () => this.showMsg('✓ Publicerad'));
+    group.appendChild(prodtest);
+    group.appendChild(publicera);
+  }
+
+  addVisaMassutskickKnapp() {
+    const actionsRow = this.querySelector('#btn-spara')?.parentElement?.parentElement;
+    if (!actionsRow || actionsRow.querySelector('#btn-visa-massutskick')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'btn-visa-massutskick';
+    btn.className = 'bg-white border border-gray-400 text-gray-700 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50';
+    btn.textContent = 'Visa massutskick';
+    btn.addEventListener('click', () => this.visaMassutskick());
+    actionsRow.insertAdjacentElement('afterbegin', btn);
+  }
+
+  buildPreviewDialog() {
+    const dlg = document.createElement('div');
+    dlg.id = 'preview-dialog';
+    dlg.className = 'hidden fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4';
+    dlg.innerHTML = `
+      <div class="bg-white rounded-lg shadow-xl border border-gray-200 w-[640px] max-w-full max-h-[85vh] flex flex-col">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <h3 class="text-[#1565c0] font-bold text-base">Förhandsvisning av massutskick</h3>
+          <button type="button" id="preview-close" class="text-gray-400 hover:text-gray-700 text-xl leading-none">✕</button>
+        </div>
+        <div class="px-6 py-5 overflow-auto">
+          <h2 id="preview-amne" class="text-lg font-bold text-gray-900 mb-1"></h2>
+          <p id="preview-meta" class="text-xs text-gray-500 mb-4"></p>
+          <div id="preview-meddelande" class="text-sm text-gray-800 leading-relaxed"></div>
+        </div>
+        <div class="flex justify-end gap-3 px-6 py-3 border-t border-gray-200">
+          <button type="button" id="preview-ok" class="bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0">Stäng</button>
+        </div>
+      </div>
+    `;
+    this.appendChild(dlg);
+    const stang = () => dlg.classList.add('hidden');
+    dlg.querySelector('#preview-close').addEventListener('click', stang);
+    dlg.querySelector('#preview-ok').addEventListener('click', stang);
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) stang();
+    });
+  }
+
+  visaMassutskick() {
+    const dlg = this.querySelector('#preview-dialog');
+    if (!dlg) return;
+    const amne = this.querySelector('#f-amne')?.value || '';
+    const avsandare = this.querySelector('#f-avsandare')?.value || '';
+    const datum = this.querySelector('#f-datum')?.value || '';
+    const meddelande = this.querySelector('#f-meddelande')?.innerHTML || '';
+    dlg.querySelector('#preview-amne').textContent = amne || '(Inget ämne)';
+    dlg.querySelector('#preview-meta').textContent = [avsandare, datum].filter(Boolean).join(' · ');
+    dlg.querySelector('#preview-meddelande').innerHTML = meddelande.trim() || '<span class="text-gray-400">(Inget meddelande)</span>';
+    dlg.classList.remove('hidden');
   }
 
   getFormBody() {
