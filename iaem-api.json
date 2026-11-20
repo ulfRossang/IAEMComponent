@@ -312,6 +312,35 @@
       }
     },
 
+    "/massutskick/excel": {
+      "get": {
+        "summary": "Lista uppladdade Excel-ark (R-nummer)",
+        "tags": ["Massutskick"],
+        "responses": {
+          "200": { "description": "Lista av filer", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ExcelFil" } } } } }
+        }
+      },
+      "post": {
+        "summary": "Ladda upp ett Excel-ark (R-nummer)",
+        "tags": ["Massutskick"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["fil"],
+                "properties": { "fil": { "type": "string", "format": "binary" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Uppladdad", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ExcelFil" } } } }
+        }
+      }
+    },
+
     "/publicering/installningar": {
       "get": {
         "summary": "Lista publiceringsinställningar (informationssamband)",
@@ -581,8 +610,8 @@
           "produktid":         { "type": "string" },
           "meddelandeid":      { "type": "string" },
           "systembeteckning":  { "type": "string" },
-          "antsKodInternet":   { "type": "string" },
-          "antsKodEjInternet": { "type": "string" },
+          "antsKodInternet":   { "type": "string", "description": "A-kod digitalt" },
+          "antsKodEjInternet": { "type": "string", "description": "A-kod ej digitalt" },
           "resultatstalle":    { "type": "string" }
         }
       },
@@ -593,8 +622,8 @@
           "produktid":         { "type": "string" },
           "meddelandeid":      { "type": "string" },
           "systembeteckning":  { "type": "string" },
-          "antsKodInternet":   { "type": "string" },
-          "antsKodEjInternet": { "type": "string" },
+          "antsKodInternet":   { "type": "string", "description": "A-kod digitalt" },
+          "antsKodEjInternet": { "type": "string", "description": "A-kod ej digitalt" },
           "resultatstalle":    { "type": "string" }
         }
       },
@@ -609,6 +638,7 @@
           "utskicksdatum":         { "type": "string" },
           "notifieringskategori":  { "type": "string" },
           "meddelande":            { "type": "string" },
+          "antskod":               { "type": "string", "description": "Akod" },
           "status":                { "type": "string", "enum": ["Under upplägg", "Klarmarkerad", "Skickad"] }
         }
       },
@@ -622,7 +652,21 @@
           "amne":                  { "type": "string" },
           "utskicksdatum":         { "type": "string" },
           "notifieringskategori":  { "type": "string" },
-          "meddelande":            { "type": "string" }
+          "meddelande":            { "type": "string" },
+          "antskod":               { "type": "string", "description": "Akod" }
+        }
+      },
+
+      "ExcelFil": {
+        "type": "object",
+        "description": "Uppladdat Excel-ark med R-nummer (lagras i backend).",
+        "properties": {
+          "id":        { "type": "integer" },
+          "filnamn":   { "type": "string" },
+          "storlek":   { "type": "integer", "description": "Bytes" },
+          "typ":       { "type": "string", "description": "MIME-typ" },
+          "uppladdad": { "type": "string", "description": "ISO 8601 datum-tid" },
+          "dataUrl":   { "type": "string", "description": "Filinnehåll som data-URL" }
         }
       },
 
