@@ -47,13 +47,9 @@
                 <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
                 Debiteringsuppgifter
               </a>
-              <a href="#/administration/massutskick" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
+              <a href="#/administration/massutskick-ny" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
                 <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 Massutskick
-              </a>
-              <a href="#/administration/massutskick-ny" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
-                <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/><line x1="19" y1="5" x2="19" y2="9"/><line x1="17" y1="7" x2="21" y2="7"/></svg>
-                Massutskick ny
               </a>
             </div>
           </div>
@@ -137,7 +133,6 @@
       const routeMap = {
         "#/administration/infoprodukter": "<page-infoprodukter></page-infoprodukter>",
         "#/administration/debitering": "<page-debitering></page-debitering>",
-        "#/administration/massutskick": "<page-massutskick></page-massutskick>",
         "#/administration/massutskick-ny": "<page-massutskick-ny></page-massutskick-ny>"
       };
       content.innerHTML = routeMap[hash] ?? routeMap["#/administration/infoprodukter"];
@@ -2050,11 +2045,11 @@
                     <input id="f-sys" class="${INPUT9}" />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod digitalt</label>
+                    <label class="block text-xs text-gray-500 mb-1">A-kod digitalt</label>
                     <input id="f-ants-i" class="${INPUT9}" />
                   </div>
                   <div>
-                    <label class="block text-xs text-gray-500 mb-1">ANTS-kod ej digitalt</label>
+                    <label class="block text-xs text-gray-500 mb-1">A-kod ej digitalt</label>
                     <input id="f-ants-ej" class="${INPUT9}" />
                   </div>
                   <div>
@@ -2094,8 +2089,8 @@
                       <th>Produkt-ID</th>
                       <th>Medd-ID</th>
                       <th>Systembeteckning</th>
-                      <th>ANTS-kod digitalt</th>
-                      <th>ANTS-kod ej digitalt</th>
+                      <th>A-kod digitalt</th>
+                      <th>A-kod ej digitalt</th>
                       <th>Resultatst\xE4lle</th>
                       <th>Status</th>
                     </tr>
@@ -2606,7 +2601,7 @@
     connectedCallback() {
       super.connectedCallback();
       const h1 = this.querySelector("h1");
-      if (h1) h1.textContent = "Administrera massutskick ny";
+      if (h1) h1.textContent = "Administrera massutskick";
       this.querySelector("#btn-bilagor")?.remove();
       this.setupSkapaUtkast();
       this.setupSpara();

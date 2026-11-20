@@ -8,7 +8,7 @@ class PageMassutskickNy extends PageMassutskick {
   connectedCallback() {
     super.connectedCallback();
     const h1 = this.querySelector('h1');
-    if (h1) h1.textContent = 'Administrera massutskick ny';
+    if (h1) h1.textContent = 'Administrera massutskick';
     this.querySelector('#btn-bilagor')?.remove();
     this.setupSkapaUtkast();
     this.setupSpara();

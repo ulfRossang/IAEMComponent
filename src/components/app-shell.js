@@ -46,13 +46,9 @@ class AppShell extends HTMLElement {
                 <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
                 Debiteringsuppgifter
               </a>
-              <a href="#/administration/massutskick" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
+              <a href="#/administration/massutskick-ny" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
                 <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 Massutskick
-              </a>
-              <a href="#/administration/massutskick-ny" class="flex items-center gap-2.5 px-4 py-1.5 text-sm hover:bg-[#eef2f7] transition-colors text-gray-800">
-                <svg class="nav-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/><line x1="19" y1="5" x2="19" y2="9"/><line x1="17" y1="7" x2="21" y2="7"/></svg>
-                Massutskick ny
               </a>
             </div>
           </div>
@@ -149,7 +145,6 @@ class AppShell extends HTMLElement {
     const routeMap = {
       '#/administration/infoprodukter': '<page-infoprodukter></page-infoprodukter>',
       '#/administration/debitering':    '<page-debitering></page-debitering>',
-      '#/administration/massutskick':   '<page-massutskick></page-massutskick>',
       '#/administration/massutskick-ny': '<page-massutskick-ny></page-massutskick-ny>',
     };
 
