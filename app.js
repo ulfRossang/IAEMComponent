@@ -377,6 +377,20 @@
   function mockGetUppladdadeExcelfiler() {
     return [...UPPLADDADE_EXCELFILER];
   }
+  function mockDeleteExcelFil(id) {
+    const i = UPPLADDADE_EXCELFILER.findIndex((f) => f.id === id);
+    if (i < 0) return false;
+    UPPLADDADE_EXCELFILER.splice(i, 1);
+    return true;
+  }
+  var VERIFIERINGS_RNUMMER = [];
+  function mockGetVerifieringsRnummer() {
+    return [...VERIFIERINGS_RNUMMER];
+  }
+  function mockSparaVerifieringsRnummer(rnummer) {
+    VERIFIERINGS_RNUMMER = [...rnummer];
+    return [...VERIFIERINGS_RNUMMER];
+  }
 
   // src/pages/kundvy/meddelanden.js
   var BTN = "bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0";
@@ -2610,8 +2624,54 @@
       this.addDokumentSektion();
       this.buildExcelDialog();
       this.buildPreviewDialog();
+      this.buildVerifieringDialog();
       this.addVisaMassutskickKnapp();
       this.addProdPublKnappar();
+    }
+    buildVerifieringDialog() {
+      const dlg = document.createElement("div");
+      dlg.id = "verifiering-dialog";
+      dlg.className = "hidden fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4";
+      dlg.innerHTML = `
+        <div class="bg-white rounded-lg shadow-xl border border-gray-200 w-[440px] max-w-full space-y-4 p-6">
+          <h3 class="text-[#1565c0] font-bold text-base">Verifiering</h3>
+          <p class="text-sm text-gray-700">Lägg till eller byt ut R-nummer och spara en uppdaterad version.</p>
+          <div class="space-y-2">
+            ${[1, 2, 3, 4].map((n) => `
+              <div class="flex items-center gap-3">
+                <label class="text-sm text-gray-700 w-24 shrink-0">R-nummer ${n}</label>
+                <input id="verif-rnr-${n}" class="border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-[#1565c0] bg-white flex-1" placeholder="R-nummer" />
+              </div>
+            `).join("")}
+          </div>
+          <div class="flex justify-end gap-3 pt-2">
+            <button type="button" id="verif-cancel" class="bg-white border border-gray-400 text-gray-700 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50">Avbryt</button>
+            <button type="button" id="verif-ok" class="bg-[#1565c0] text-white rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-[#0d52a8] border-0">Spara R-nummer</button>
+          </div>
+        </div>
+      `;
+      this.appendChild(dlg);
+      const stang = () => dlg.classList.add("hidden");
+      dlg.querySelector("#verif-cancel").addEventListener("click", stang);
+      dlg.addEventListener("click", (e) => {
+        if (e.target === dlg) stang();
+      });
+      dlg.querySelector("#verif-ok").addEventListener("click", () => {
+        const rnr = [1, 2, 3, 4].map((n) => dlg.querySelector(`#verif-rnr-${n}`).value.trim()).filter(Boolean);
+        mockSparaVerifieringsRnummer(rnr);
+        stang();
+        this.showMsg(`✓ R-nummer sparade (${rnr.length})`);
+      });
+    }
+    openVerifieringDialog() {
+      const dlg = this.querySelector("#verifiering-dialog");
+      if (!dlg) return;
+      const sparade = mockGetVerifieringsRnummer();
+      [1, 2, 3, 4].forEach((n) => {
+        const i = dlg.querySelector(`#verif-rnr-${n}`);
+        if (i) i.value = sparade[n - 1] || "";
+      });
+      dlg.classList.remove("hidden");
     }
     setupSkapaUtkast() {
       const old = this.querySelector("#btn-ny");
@@ -2655,7 +2715,7 @@
       prodtest.id = "btn-prodtest";
       prodtest.className = "bg-white border border-gray-400 text-gray-700 rounded-full px-4 py-1.5 text-sm cursor-pointer hover:bg-gray-50";
       prodtest.textContent = "Verifiering";
-      prodtest.addEventListener("click", () => this.showMsg("✓ Skickad till verifiering"));
+      prodtest.addEventListener("click", () => this.openVerifieringDialog());
       const publicera = document.createElement("button");
       publicera.type = "button";
       publicera.id = "btn-publicera";
@@ -2915,10 +2975,17 @@
       wrap.innerHTML = filer.map((f) => `
         <div class="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded text-sm text-gray-700">
           <span>\u{1F4CA}</span>
-          <a href="${f.dataUrl}" download="${f.filnamn}" class="text-[#0066b3] hover:underline">${f.filnamn}</a>
+          <a href="${f.dataUrl}" download="${f.filnamn}" class="flex-1 text-[#0066b3] hover:underline">${f.filnamn}</a>
           <span class="text-xs text-gray-400">${Math.max(1, Math.round(f.storlek / 1024))} kB</span>
+          <button type="button" class="text-gray-400 hover:text-red-500 text-xs leading-none" title="Ta bort" data-id="${f.id}">✕</button>
         </div>
       `).join("");
+      wrap.querySelectorAll("button[data-id]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          mockDeleteExcelFil(Number(btn.getAttribute("data-id")));
+          this.renderExcelFiler();
+        });
+      });
     }
   });
 })();

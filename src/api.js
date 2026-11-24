@@ -234,3 +234,19 @@ export function mockUploadExcelFil(fil) {
 export function mockGetUppladdadeExcelfiler() {
   return [...UPPLADDADE_EXCELFILER];
 }
+export function mockDeleteExcelFil(id) {
+  const i = UPPLADDADE_EXCELFILER.findIndex(f => f.id === id);
+  if (i < 0) return false;
+  UPPLADDADE_EXCELFILER.splice(i, 1);
+  return true;
+}
+
+// ---- Sparade R-nummer för verifiering (simulerad backend-lagring) ----
+let VERIFIERINGS_RNUMMER = [];
+export function mockGetVerifieringsRnummer() {
+  return [...VERIFIERINGS_RNUMMER];
+}
+export function mockSparaVerifieringsRnummer(rnummer) {
+  VERIFIERINGS_RNUMMER = [...rnummer];
+  return [...VERIFIERINGS_RNUMMER];
+}
