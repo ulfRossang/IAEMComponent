@@ -2287,7 +2287,7 @@
                 <!-- Row 4: Utskicksdatum -->
                 <div class="grid grid-cols-2 gap-6">
                   <div>
-                    <label class="${LABEL2}">Utskicksdatum ${REQ2}</label>
+                    <label class="${LABEL2}">Önskat utskicksdatum ${REQ2}</label>
                     <input id="f-datum" type="date" class="${INPUT10}" />
                   </div>
                 </div>
@@ -2731,9 +2731,9 @@
     }
     addAntskodKolumn() {
       const ths = Array.from(this.querySelectorAll("thead th"));
-      if (ths.some((th) => th.textContent.trim() === "Akod")) return;
+      if (ths.some((th) => th.textContent.trim() === "Resultatställe")) return;
       const statusTh = ths.find((th) => th.textContent.trim() === "Status");
-      if (statusTh) statusTh.insertAdjacentHTML("beforebegin", "<th>Akod</th>");
+      if (statusTh) statusTh.insertAdjacentHTML("beforebegin", "<th>Resultatställe</th>");
     }
     renderUtskick() {
       const tbody = this.querySelector("#utskick-tbody");
@@ -2775,7 +2775,7 @@
           <input id="f-amne" class="${INPUT}" />
         </div>
         <div>
-          <label class="${LABEL}">Akod</label>
+          <label class="${LABEL}">Resultatställe</label>
           <input id="f-antskod" class="${INPUT}" />
         </div>
       `;

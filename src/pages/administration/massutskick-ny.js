@@ -150,9 +150,9 @@ class PageMassutskickNy extends PageMassutskick {
 
   addAntskodKolumn() {
     const ths = Array.from(this.querySelectorAll('thead th'));
-    if (ths.some(th => th.textContent.trim() === 'Akod')) return;
+    if (ths.some(th => th.textContent.trim() === 'Resultatställe')) return;
     const statusTh = ths.find(th => th.textContent.trim() === 'Status');
-    if (statusTh) statusTh.insertAdjacentHTML('beforebegin', '<th>Akod</th>');
+    if (statusTh) statusTh.insertAdjacentHTML('beforebegin', '<th>Resultatställe</th>');
   }
 
   renderUtskick() {
@@ -196,7 +196,7 @@ class PageMassutskickNy extends PageMassutskick {
         <input id="f-amne" class="${INPUT}" />
       </div>
       <div>
-        <label class="${LABEL}">Akod</label>
+        <label class="${LABEL}">Resultatställe</label>
         <input id="f-antskod" class="${INPUT}" />
       </div>
     `;

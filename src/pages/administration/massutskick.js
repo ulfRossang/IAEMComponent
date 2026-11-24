@@ -81,7 +81,7 @@ export class PageMassutskick extends HTMLElement {
                 <!-- Row 4: Utskicksdatum -->
                 <div class="grid grid-cols-2 gap-6">
                   <div>
-                    <label class="${LABEL}">Utskicksdatum ${REQ}</label>
+                    <label class="${LABEL}">Önskat utskicksdatum ${REQ}</label>
                     <input id="f-datum" type="date" class="${INPUT}" />
                   </div>
                 </div>
